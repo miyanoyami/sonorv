@@ -5,7 +5,7 @@ import './App.css'
 import 'bulma/css/bulma.css'
 
 function App() {
-	const basePath = process.env.GITHUB_PAGES ? '/vseek/dist/icon/' : '/vseek/icon/'
+	const basePath = process.env.GITHUB_PAGES ? '/sonorv/dist/icon/' : '/sonorv/icon/'
 	const vts: VT[] = [
 		{
 			name: "宮乃やみ",
@@ -119,7 +119,7 @@ function App() {
 	}
 
 	function show(as: number[]): VT[] {
-		console.log(as)
+		console.log(as.length)
 		return [vts[0], vts[1], vts[2], vts[3]]
 	}
 
@@ -339,23 +339,28 @@ function App() {
 
 	return (
 		<>
-		<div className="container">
-		<h1>そのぶい</h1>
+		<div className="container p-1">
+		<div className="container pl-1 pr-1">
+		<h1>そのぶいっ</h1>
+
+		<p>「そのぶいっ」はVリスナーの皆さんの好みを選択してもらうことで</p>
+		<p>好みに合うかもしれないVTuberをざっくりオススメするサービスです。</p>
+		<p className="is-size-7">※VTuberデータの追加は御本人様から<a href="https://x.com/@miyanoyami83" target="_blank">宮乃やみ</a>までご連絡ください。</p>
 
 		{
 			questions.map(
 				(question, i) => {
 					if (answerCount == i) {
 						return (
-							<div className="card fixed-grid">
+							<div className="card fixed-grid m-2">
 							<p>【{i+1}問目】</p>
-							<p>{question.q}</p>
+							<p className="is-size-5">{question.q}</p>
 							{
 								question.as.map(
 									(a, j) => {
 										let buttonClass = `button is-medium is-fullwidth has-text-weight-medium`;
 										return (
-											<div className="cell m-2" id={"hoge-" + j}>
+											<div className="cell m-1">
 											<button className={buttonClass} onClick={() =>{
 												handleChoise(i,j)
 											}
@@ -380,16 +385,16 @@ function App() {
 					if (answerCount === 18) {
 						return (
 							<a href={vtuber.yt} target="_blank" className="has-text-black">
-							<div className="card m-4">
+							<div className="card mt-2">
 							<div className="media">
 							<div className="media-left">
-							<figure className="image is-128x128">
-							<LazyLoadImage className="is-rounded" src={basePath + vtuber.iconFile} width="128" height="128" />
+							<figure className="image is-96x96">
+							<LazyLoadImage className="is-rounded" src={basePath + vtuber.iconFile} />
 							</figure>
 							</div>
 
 							<div className="media-content">
-							<p className="title is-4 mt-6">
+							<p className="has-text-weight-semibold is-size-5 mt-5">
 							{vtuber.name}
 							</p>
 							</div>
@@ -403,13 +408,13 @@ function App() {
 		</div>
 		<div>
 		{ answerCount > 0 &&
-			<button className="m-4 button is-info is-light" onClick={() => {
+			<button className="m-2 button is-info is-light" onClick={() => {
 			setAnswerCount(answerCount-1)
 		}
 		}>前の質問に戻る</button>
 		}
 
-		<button className="m-4 button is-warning is-light" onClick={() => {
+		<button className="m-2 button is-warning is-light" onClick={() => {
 			setChoise([
 				0,0,0,0,0,
 				0,0,0,0,0,
@@ -419,6 +424,7 @@ function App() {
 			setAnswerCount(0)
 		}
 		}>最初にもどる</button>
+		</div>
 		</div>
 		</div>
 		</>
