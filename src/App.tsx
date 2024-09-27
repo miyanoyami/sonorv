@@ -5,6 +5,7 @@ import './App.css'
 import 'bulma/css/bulma.css'
 
 function App() {
+	const basePath = process.env.GITHUB_PAGES ? '/vseek/dist/icon/' : '/vseek/icon/'
 	const vts: VT[] = [
 		{
 			name: "宮乃やみ",
@@ -338,6 +339,7 @@ function App() {
 
 	return (
 		<>
+		<div className="container">
 		<h1>そのぶい</h1>
 
 		{
@@ -382,7 +384,7 @@ function App() {
 							<div className="media">
 							<div className="media-left">
 							<figure className="image is-128x128">
-							<LazyLoadImage className="is-rounded" src={"/vseek/public/icon/" + vtuber.iconFile} width="128" height="128" />
+							<LazyLoadImage className="is-rounded" src={basePath + vtuber.iconFile} width="128" height="128" />
 							</figure>
 							</div>
 
@@ -417,6 +419,7 @@ function App() {
 			setAnswerCount(0)
 		}
 		}>最初にもどる</button>
+		</div>
 		</div>
 		</>
 	)
