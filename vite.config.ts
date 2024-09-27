@@ -7,5 +7,5 @@ export default defineConfig({
     'process.env': {}
   },
   plugins: [react()],
-  base: '/vseek/'
+  base: '/sonorv/'
 })
