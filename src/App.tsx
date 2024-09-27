@@ -1,12 +1,88 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
+import { VT } from './types/Vt.ts'
 import './App.css'
 import 'bulma/css/bulma.css'
 
 function App() {
-	// 画像仮置き
-	const image1 = "https://pbs.twimg.com/profile_images/1778410657140146176/VE6e5pV6_400x400.jpg"
+	const vts: VT[] = [
+		{
+			name: "宮乃やみ",
+			iconFile: "yami001.jpg",
+			yt: "https://www.youtube.com/@miyanoyami",
+			attrsSet: [
+				[],
+				[],
+				[],
+				[],
+				[],
+				[],
+				[],
+				[],
+				[],
+				[],
+				[],
+				[],
+				[],
+				[],
+				[],
+				[],
+				[],
+				[],
+			],
+			score: 10000,
+		},
+		{
+			name: "日乃芽メラニカ",
+			iconFile: "meranica001.jpg",
+			yt: "https://www.youtube.com/@meranicaCh",
+			attrsSet: [[]],
+			score: 10000,
+		},
+		{
+			name: "紅桃あると",
+			iconFile: "alto001.jpg",
+			yt: "https://www.youtube.com/@kurumi_alto",
+			attrsSet: [[]],
+			score: 10000,
+		},
+		{
+			name: "のらまに",
+			iconFile: "noramani001.jpg",
+			yt: "https://www.youtube.com/c/noramanichannel",
+			attrsSet: [[]],
+			score: 10000,
+		},
+		{
+			name: "詠ヴィオラ",
+			iconFile: "viola001.jpg",
+			yt: "http://youtube.com/@NGMViola",
+			attrsSet: [[]],
+			score: 10000,
+		},
+		{
+			name: "kurenaif",
+			iconFile: "kurenaif001.jpg",
+			yt: "https://www.youtube.com/c/kurenaif",
+			attrsSet: [[]],
+			score: 10000,
+		},
+		{
+			name: "隣野寧音",
+			iconFile: "neine001.jpg",
+			yt: "https://www.youtube.com/@NeineChannel",
+			attrsSet: [[]],
+			score: 10000,
+		},
+		{
+			name: "パイナップル秀夫",
+			iconFile: "hideo001.jpg",
+			yt: "https://www.youtube.com/@PineappleHideo",
+			attrsSet: [[]],
+			score: 10000,
+		},
+
+	]
 
 	function createScoreMatch() {
 		return {
@@ -39,6 +115,11 @@ function App() {
 				}
 			}
 		}
+	}
+
+	function show(as: number[]): VT[] {
+		console.log(as)
+		return [vts[0], vts[1], vts[2], vts[3]]
 	}
 
 	// 質問20題くらい作る
@@ -255,19 +336,8 @@ function App() {
 		setAnswerCount(answerCount + 1)
 	}
 
-	//  VTuber の名前・画像・URL・質問に対応するスコアをセットする
-	const vtubers = [
-		{"name": "aaa", "icon": image1},
-		{"name": "bbb", "icon": image1}
-	]
-
 	return (
 		<>
-		<div>
-		<a href="https://react.dev" target="_blank">
-		<LazyLoadImage src={reactLogo} className="logo react" alt="React logo" />
-		</a>
-		</div>
 		<h1>そのぶい</h1>
 
 		{
@@ -281,9 +351,9 @@ function App() {
 							{
 								question.as.map(
 									(a, j) => {
-										let buttonClass = `button is-medium is-fullwidth has-text-weight-medium  has-background-primary-${90-j*5}`;
+										let buttonClass = `button is-medium is-fullwidth has-text-weight-medium`;
 										return (
-											<div className="cell m-2">
+											<div className="cell m-2" id={"hoge-" + j}>
 											<button className={buttonClass} onClick={() =>{
 												handleChoise(i,j)
 											}
@@ -301,18 +371,29 @@ function App() {
 		}
 
 		<div>
-		{ answerCount === 18 && <h2>今日のあなたにおすすめのVTuberは......</h2> }
+		{ answerCount === 18 && <h2>おすすめのVTuberは......</h2> }
 		{
-			vtubers.map(
+			show(choises).map(
 				(vtuber) => { 
 					if (answerCount === 18) {
 						return (
-							<div className="card">
-							<a>
-							<LazyLoadImage src={vtuber.icon} width="128" height="128" />
-							<p>{vtuber.name}</p>
-							</a>
+							<a href={vtuber.yt} target="_blank" className="has-text-black">
+							<div className="card m-4">
+							<div className="media">
+							<div className="media-left">
+							<figure className="image is-128x128">
+							<LazyLoadImage className="is-rounded" src={"/vseek/public/icon/" + vtuber.iconFile} width="128" height="128" />
+							</figure>
 							</div>
+
+							<div className="media-content">
+							<p className="title is-4 mt-6">
+							{vtuber.name}
+							</p>
+							</div>
+							</div>
+							</div>
+							</a>
 						) }
 				}
 			)
@@ -320,7 +401,7 @@ function App() {
 		</div>
 		<div>
 		{ answerCount > 0 &&
-			<button className="button is-info is-light" onClick={() => {
+			<button className="m-4 button is-info is-light" onClick={() => {
 			setAnswerCount(answerCount-1)
 		}
 		}>前の質問に戻る</button>

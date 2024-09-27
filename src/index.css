@@ -66,3 +66,10 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.bg-note {
+    background-image: linear-gradient(rgba(210, 210, 210, 0.4) 1px, transparent 1px), linear-gradient(to right, rgba(210, 210, 210, 0.4) 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-color: #fff;
+    background-position: -14px 14px;
+}
