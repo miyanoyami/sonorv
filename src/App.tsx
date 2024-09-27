@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import './App.css'
-import 'bulma/css/bulma.css';
+import 'bulma/css/bulma.css'
 
 function App() {
 	// 画像仮置き
@@ -208,6 +209,25 @@ function App() {
 			],
 			"fun": createScoreAdd(),
 		},
+		// 17
+		{
+			"q":"メカクレは好き?",
+			"as": [
+				"すき",
+				"そうでもない",
+			],
+			"fun": createScoreAdd(),
+		},
+		// 18
+		{
+			"q":"お酒飲む人は好き?",
+			"as": [
+				"すき",
+				"そうでもない",
+			],
+			"fun": createScoreAdd(),
+		},
+
 	]
 
 	// 回答保持領域
@@ -215,7 +235,7 @@ function App() {
 		0,0,0,0,0,
 		0,0,0,0,0,
 		0,0,0,0,0,
-		0,
+		0,0,0
 	])
 
 	const [answerCount, setAnswerCount] = useState(0)
@@ -245,28 +265,33 @@ function App() {
 		<>
 		<div>
 		<a href="https://react.dev" target="_blank">
-		<img src={reactLogo} className="logo react" alt="React logo" />
+		<LazyLoadImage src={reactLogo} className="logo react" alt="React logo" />
 		</a>
 		</div>
-		<h1>VSeek</h1>
+		<h1>そのぶい</h1>
 
 		{
 			questions.map(
 				(question, i) => {
 					if (answerCount == i) {
 						return (
-							<div className="card">
-							<p>質問{i}:{question.q}</p>
+							<div className="card fixed-grid">
+							<p>【{i+1}問目】</p>
+							<p>{question.q}</p>
 							{
 								question.as.map(
-									(a, j) => 
-									<button onClick={() =>{
-										handleChoise(i,j)
-									}
-									}>{a}</button>
+									(a, j) => {
+										let buttonClass = `button is-medium is-fullwidth has-text-weight-medium  has-background-primary-${90-j*5}`;
+										return (
+											<div className="cell m-2">
+											<button className={buttonClass} onClick={() =>{
+												handleChoise(i,j)
+											}
+											}>{a}</button>
+											</div>
+										)}
 								)
 							}
-							<p>えらんだ: {choises[i]} </p>
 							</div>
 						)
 					}
@@ -276,15 +301,15 @@ function App() {
 		}
 
 		<div>
-		{ answerCount === 16 && <h2>あなたにおすすめのVTuberは......</h2> }
+		{ answerCount === 18 && <h2>今日のあなたにおすすめのVTuberは......</h2> }
 		{
 			vtubers.map(
 				(vtuber) => { 
-					if (answerCount === 16) {
+					if (answerCount === 18) {
 						return (
 							<div className="card">
 							<a>
-							<img src={vtuber.icon} width="128" height="128" />
+							<LazyLoadImage src={vtuber.icon} width="128" height="128" />
 							<p>{vtuber.name}</p>
 							</a>
 							</div>
@@ -294,16 +319,23 @@ function App() {
 		}
 		</div>
 		<div>
-		<button onClick={() => {
+		{ answerCount > 0 &&
+			<button className="button is-info is-light" onClick={() => {
+			setAnswerCount(answerCount-1)
+		}
+		}>前の質問に戻る</button>
+		}
+
+		<button className="m-4 button is-warning is-light" onClick={() => {
 			setChoise([
 				0,0,0,0,0,
 				0,0,0,0,0,
 				0,0,0,0,0,
-				0,
+				0,0,0
 			])
 			setAnswerCount(0)
 		}
-		}>はじめにもどる</button>
+		}>最初にもどる</button>
 		</div>
 		</>
 	)
