@@ -100,6 +100,17 @@ function App() {
 		},
 		// 4
 		{
+			q:"好きなコメント欄の雰囲気は?",
+			as: [
+				"こじんまり",
+				"のんびり",
+				"にぎやか",
+				"ガヤガヤ",
+			],
+			fun: createScoreNorm(4)
+		},
+		// 5
+		{
 			q: "新人とベテランなら?",
 			as: [
 				"ド新人",
@@ -110,7 +121,7 @@ function App() {
 			],
 			fun: createScoreNorm(5),
 		},
-		// 5
+		// 6
 		{
 			q:"チャンネル規模は？",
 			as: [
@@ -122,7 +133,7 @@ function App() {
 			],
 			fun: createScoreNorm(5),
 		},
-		// 6
+		// 7
 		{
 			q:"見たいコンテンツは?",
 			as: [
@@ -139,7 +150,7 @@ function App() {
 			],
 			fun: createScoreMatch(),
 		},
-		// 7
+		// 8
 		{
 			q:"トークとリアクションどっちが大事?",
 			as: [
@@ -148,7 +159,7 @@ function App() {
 			],
 			fun: createScoreAdd(),
 		},
-		// 8
+		// 9
 		{
 			q:"ケモ耳は好き?",
 			as: [
@@ -157,7 +168,7 @@ function App() {
 			],
 			fun: createScoreAdd(),
 		},
-		// 9
+		// 10
 		{
 			q:"オッドアイは好き?",
 			as: [
@@ -166,7 +177,7 @@ function App() {
 			],
 			fun: createScoreAdd(),
 		},
-		// 10
+		// 11
 		{
 			q:"眼鏡は好き?",
 			as: [
@@ -175,7 +186,7 @@ function App() {
 			],
 			fun: createScoreAdd(),
 		},
-		// 11
+		// 12
 		{
 			q:"和服は好き?",
 			as: [
@@ -184,7 +195,7 @@ function App() {
 			],
 			fun: createScoreAdd(),
 		},
-		// 12
+		// 13
 		{
 			q:"ロリ・ショタは好き?",
 			as: [
@@ -193,7 +204,7 @@ function App() {
 			],
 			fun: createScoreAdd(),
 		},
-		// 13
+		// 14
 		{
 			q:"人外は好き?",
 			as: [
@@ -202,7 +213,7 @@ function App() {
 			],
 			fun: createScoreAdd(),
 		},
-		// 14
+		// 15
 		{
 			q:"メカは好き?",
 			as: [
@@ -211,7 +222,7 @@ function App() {
 			],
 			fun: createScoreAdd(),
 		},
-		// 15
+		// 16
 		{
 			q:"方言は好き?",
 			as: [
@@ -220,7 +231,7 @@ function App() {
 			],
 			fun: createScoreAdd(),
 		},
-		// 16
+		// 17
 		{
 			q:"下ネタは好き?",
 			as: [
@@ -229,7 +240,7 @@ function App() {
 			],
 			fun: createScoreAdd(),
 		},
-		// 17
+		// 18
 		{
 			q:"目隠れは好き?",
 			as: [
@@ -238,7 +249,7 @@ function App() {
 			],
 			fun: createScoreAdd(),
 		},
-		// 18
+		// 19
 		{
 			q:"お酒飲む人は好き?",
 			as: [
@@ -329,11 +340,11 @@ function App() {
 		}
 
 		<div>
-		{ answerCount === 18 && <h2>おすすめのVTuberは......</h2> }
-		{ answerCount === 18 &&
+		{ answerCount === 19 && <h2>おすすめのVTuberは......</h2> }
+		{ answerCount === 19 &&
 			show(questions, choises).map(
 				(vtuber, i) => { 
-					if (answerCount === 18) {
+					if (answerCount === 19) {
 						return (
 							<a key={i} href={vtuber.yt} target="_blank" className="has-text-black">
 							<div className="card mt-2">
