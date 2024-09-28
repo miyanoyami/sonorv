@@ -1,313 +1,251 @@
 import { useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
-import { VT } from './types/Vt.ts'
+import { VT, VTS } from './types/Vt.ts'
+import { question } from './types/question.ts'
 import './App.css'
 import 'bulma/css/bulma.css'
 
 function App() {
-	const basePath = process.env.GITHUB_PAGES ? '/sonorv/dist/icon/' : '/sonorv/icon/'
-	const vts: VT[] = [
-		{
-			name: "宮乃やみ",
-			iconFile: "yami001.jpg",
-			yt: "https://www.youtube.com/@miyanoyami",
-			attrsSet: [
-				[],
-				[],
-				[],
-				[],
-				[],
-				[],
-				[],
-				[],
-				[],
-				[],
-				[],
-				[],
-				[],
-				[],
-				[],
-				[],
-				[],
-				[],
-			],
-			score: 10000,
-		},
-		{
-			name: "日乃芽メラニカ",
-			iconFile: "meranica001.jpg",
-			yt: "https://www.youtube.com/@meranicaCh",
-			attrsSet: [[]],
-			score: 10000,
-		},
-		{
-			name: "紅桃あると",
-			iconFile: "alto001.jpg",
-			yt: "https://www.youtube.com/@kurumi_alto",
-			attrsSet: [[]],
-			score: 10000,
-		},
-		{
-			name: "のらまに",
-			iconFile: "noramani001.jpg",
-			yt: "https://www.youtube.com/c/noramanichannel",
-			attrsSet: [[]],
-			score: 10000,
-		},
-		{
-			name: "詠ヴィオラ",
-			iconFile: "viola001.jpg",
-			yt: "http://youtube.com/@NGMViola",
-			attrsSet: [[]],
-			score: 10000,
-		},
-		{
-			name: "kurenaif",
-			iconFile: "kurenaif001.jpg",
-			yt: "https://www.youtube.com/c/kurenaif",
-			attrsSet: [[]],
-			score: 10000,
-		},
-		{
-			name: "隣野寧音",
-			iconFile: "neine001.jpg",
-			yt: "https://www.youtube.com/@NeineChannel",
-			attrsSet: [[]],
-			score: 10000,
-		},
-		{
-			name: "パイナップル秀夫",
-			iconFile: "hideo001.jpg",
-			yt: "https://www.youtube.com/@PineappleHideo",
-			attrsSet: [[]],
-			score: 10000,
-		},
-
-	]
+	const iconBasePath = process.env.GITHUB_PAGES ? '/sonorv/dist/icon/' : '/sonorv/icon/'
+	const basePath = process.env.GITHUB_PAGES ? '/sonorv/dist/' : '/sonorv/'
+	let vts = VTS
 
 	function createScoreMatch() {
-		return {
-			score(attrs: number[], input: number): number {
-				if (attrs.includes(input)) {
-					return 0
-				} else {
-					return -1000
-				}
+		return (attrs: number[], input: number): number => {
+			if (attrs.includes(input)) {
+				return 0
+			} else {
+				return -1000
 			}
 		}
 	}
 
 	function createScoreNorm(choisesCount: number) {
-		return {
-			score(attrs: number[], input: number): number {
-				let diff: number = attrs[0] - input
-				return (-400/(choisesCount * choisesCount)) * (diff * diff)
-			}
+		return (attrs: number[], input: number): number => {
+			let diff: number = attrs[0] - input
+			return (-400/(choisesCount * choisesCount)) * (diff * diff)
 		}
 	}
 
 	function createScoreAdd() {
-		return {
-			scoreAdd(attrs: number[], input: number): number {
-				if (attrs[0] === input) {
-					return 100
-				} else {
-					return 0
-				}
+		return (attrs: number[], input: number): number => {
+			if (attrs[0] === input) {
+				return 100
+			} else {
+				return 0
 			}
 		}
 	}
 
-	function show(as: number[]): VT[] {
-		console.log(as.length)
+	// すべてのVTに対して選択済みの回答を通してスコア順を得る
+	function show(qs: question[], as: number[]): VT[] {
+		vts.map(
+			(vt) => {
+				vt.score = 0
+				vt = setScore(vt, qs, as)
+			}
+		)
+		vts.sort((a, b) => b.score - a.score)
 		return [vts[0], vts[1], vts[2], vts[3]]
+	}
+	function setScore(vt: VT, qs: question[], as: number[]): VT {
+		vt.attrsSet.map(
+			(attrs, i) => { // attrs: VTの設定値
+				let q = qs[i] // 問題定義
+				let a = as[i] // 回答内容
+				let s = q.fun(attrs, a)
+				vt.score += s
+			}
+		)
+		return vt
 	}
 
 	// 質問20題くらい作る
-	const questions = [
+	const questions: question[] = [
 		// 1
 		{
-			"q": "どんな声が好き？",
-			"as": [
+			q: "どんな声が好き？",
+			as: [
 				"渋い",
 				"かっこいい",
 				"中性的",
 				"おしとやか",
 				"かわいい",
 			],
-			"fun": createScoreNorm(5),
+			fun: createScoreNorm(5),
 		},
 		// 2
 		{
-			"q": "好きな見た目は?",
-			"as": [
+			q: "好きな見た目は?",
+			as: [
 				"女性",
 				"中性的な女性",
 				"無性別",
 				"中性的な男性",
 				"男性",
 			],
-			"fun": createScoreNorm(5),
+			fun: createScoreNorm(5),
 		},
 		// 3
 		{
-			"q":"好きなテンションは？",
-			"as": [
+			q:"好きなテンションは？",
+			as: [
 				"クール",
 				"ちょいクール",
 				"まちまち",
 				"元気",
 				"うるさい",
 			],
-			"fun": createScoreNorm(5),
+			fun: createScoreNorm(5),
 		},
 		// 4
 		{
-			"q": "新人さんとベテランさんなら?",
-			"as": [
+			q: "新人とベテランなら?",
+			as: [
 				"ド新人",
 				"新人",
 				"中堅",
 				"長め",
 				"ベテラン",
 			],
-			"fun": createScoreNorm(5),
+			fun: createScoreNorm(5),
 		},
 		// 5
 		{
-			"q":"小さいチャンネルと大きいチャンネルなら？",
-			"as": [
+			q:"チャンネル規模は？",
+			as: [
 				"駆け出し",
 				"小さめ",
 				"そこそこ",
 				"大きめ",
 				"大手",
 			],
-			"fun": createScoreNorm(5),
+			fun: createScoreNorm(5),
 		},
 		// 6
 		{
-			"q":"見たいコンテンツは?",
-			"as": [
-				"歌",
-				"お絵かき",
-				"ゲーム",
-				"雑談",
-				"TRPG",
-				"ホラー",
-				"ASMR",
-				"企画",
-				"その他",
+			q:"見たいコンテンツは?",
+			as: [
+				"歌",       // 0
+				"お絵かき", // 1
+				"ゲーム",   // 2 
+				"雑談",     // 3
+				"TRPG",     // 4
+				"ホラー",   // 5
+				"ASMR",     // 6
+				"企画",     // 7
+				"学術",     // 8
+				"その他",   // 9
 			],
-			"fun": createScoreMatch(),
+			fun: createScoreMatch(),
 		},
 		// 7
 		{
-			"q":"トーク力とリアクション力、どっちが大事?",
-			"as": [
-				"トーク力",
-				"リアクション力",
+			q:"トークとリアクションどっちが大事?",
+			as: [
+				"トーク",
+				"リアクション",
 			],
-			"fun": createScoreAdd(),
+			fun: createScoreAdd(),
 		},
 		// 8
 		{
-			"q":"ケモ耳は好き?",
-			"as": [
+			q:"ケモ耳は好き?",
+			as: [
 				"すき",
 				"そうでもない",
 			],
-			"fun": createScoreAdd(),
+			fun: createScoreAdd(),
 		},
 		// 9
 		{
-			"q":"オッドアイは好き?",
-			"as": [
+			q:"オッドアイは好き?",
+			as: [
 				"すき",
 				"そうでもない",
 			],
-			"fun": createScoreAdd(),
+			fun: createScoreAdd(),
 		},
 		// 10
 		{
-			"q":"眼鏡は好き?",
-			"as": [
+			q:"眼鏡は好き?",
+			as: [
 				"すき",
 				"そうでもない",
 			],
-			"fun": createScoreAdd(),
+			fun: createScoreAdd(),
 		},
 		// 11
 		{
-			"q":"和服は好き?",
-			"as": [
+			q:"和服は好き?",
+			as: [
 				"すき",
 				"そうでもない",
 			],
-			"fun": createScoreAdd(),
+			fun: createScoreAdd(),
 		},
 		// 12
 		{
-			"q":"ロリ・ショタは好き?",
-			"as": [
+			q:"ロリ・ショタは好き?",
+			as: [
 				"すき",
 				"そうでもない",
 			],
-			"fun": createScoreAdd(),
+			fun: createScoreAdd(),
 		},
 		// 13
 		{
-			"q":"人外は好き?",
-			"as": [
+			q:"人外は好き?",
+			as: [
 				"すき",
 				"そうでもない",
 			],
-			"fun": createScoreAdd(),
+			fun: createScoreAdd(),
 		},
 		// 14
 		{
-			"q":"メカは好き?",
-			"as": [
+			q:"メカは好き?",
+			as: [
 				"すき",
 				"そうでもない",
 			],
-			"fun": createScoreAdd(),
+			fun: createScoreAdd(),
 		},
 		// 15
 		{
-			"q":"方言は好き?",
-			"as": [
+			q:"方言は好き?",
+			as: [
 				"すき",
 				"そうでもない",
 			],
-			"fun": createScoreAdd(),
+			fun: createScoreAdd(),
 		},
 		// 16
 		{
-			"q":"下ネタは好き?",
-			"as": [
+			q:"下ネタは好き?",
+			as: [
 				"すき",
 				"そうでもない",
 			],
-			"fun": createScoreAdd(),
+			fun: createScoreAdd(),
 		},
 		// 17
 		{
-			"q":"メカクレは好き?",
-			"as": [
+			q:"目隠れは好き?",
+			as: [
 				"すき",
 				"そうでもない",
 			],
-			"fun": createScoreAdd(),
+			fun: createScoreAdd(),
 		},
 		// 18
 		{
-			"q":"お酒飲む人は好き?",
-			"as": [
+			q:"お酒飲む人は好き?",
+			as: [
 				"すき",
 				"そうでもない",
 			],
-			"fun": createScoreAdd(),
+			fun: createScoreAdd(),
 		},
 
 	]
@@ -320,7 +258,7 @@ function App() {
 		0,0,0
 	])
 
-	const [answerCount, setAnswerCount] = useState(0)
+	const [answerCount, setAnswerCount] = useState(-1)
 
 	// 選択肢記憶
 	function handleChoise(q: number, a: number): void {
@@ -341,18 +279,31 @@ function App() {
 		<>
 		<div className="container p-1">
 		<div className="container pl-1 pr-1">
-		<h1>そのぶいっ</h1>
+		<a href="/">
+		<LazyLoadImage src={basePath + "logo.svg"} width="320px" alt="logo"/>
+		</a>
 
-		<p>「そのぶいっ」はVリスナーの皆さんの好みを選択してもらうことで</p>
+		{ answerCount == -1 &&
+		<div>
+		<p>そのぶいはVリスナーの皆さんの好みを選択してもらうことで</p>
 		<p>好みに合うかもしれないVTuberをざっくりオススメするサービスです。</p>
 		<p className="is-size-7">※VTuberデータの追加は御本人様から<a href="https://x.com/@miyanoyami83" target="_blank">宮乃やみ</a>までご連絡ください。</p>
+		</div>
+		}
+
+		{ answerCount == -1 &&
+			<button className="m-2 button is-primary is-light" onClick={() => {
+			setAnswerCount(0)
+		}
+		}>はじめる</button>
+		}
 
 		{
 			questions.map(
 				(question, i) => {
 					if (answerCount == i) {
 						return (
-							<div className="card fixed-grid m-2">
+							<div key={i} className="card fixed-grid m-2">
 							<p>【{i+1}問目】</p>
 							<p className="is-size-5">{question.q}</p>
 							{
@@ -360,7 +311,7 @@ function App() {
 									(a, j) => {
 										let buttonClass = `button is-medium is-fullwidth has-text-weight-medium`;
 										return (
-											<div className="cell m-1">
+											<div key={"sub-" + j} className="cell m-1">
 											<button className={buttonClass} onClick={() =>{
 												handleChoise(i,j)
 											}
@@ -379,17 +330,17 @@ function App() {
 
 		<div>
 		{ answerCount === 18 && <h2>おすすめのVTuberは......</h2> }
-		{
-			show(choises).map(
-				(vtuber) => { 
+		{ answerCount === 18 &&
+			show(questions, choises).map(
+				(vtuber, i) => { 
 					if (answerCount === 18) {
 						return (
-							<a href={vtuber.yt} target="_blank" className="has-text-black">
+							<a key={i} href={vtuber.yt} target="_blank" className="has-text-black">
 							<div className="card mt-2">
 							<div className="media">
 							<div className="media-left">
 							<figure className="image is-96x96">
-							<LazyLoadImage className="is-rounded" src={basePath + vtuber.iconFile} />
+							<LazyLoadImage className="is-rounded" src={iconBasePath + vtuber.iconFile} />
 							</figure>
 							</div>
 
@@ -414,6 +365,7 @@ function App() {
 		}>前の質問に戻る</button>
 		}
 
+		{ answerCount > 1 && 
 		<button className="m-2 button is-warning is-light" onClick={() => {
 			setChoise([
 				0,0,0,0,0,
@@ -421,9 +373,10 @@ function App() {
 				0,0,0,0,0,
 				0,0,0
 			])
-			setAnswerCount(0)
+			setAnswerCount(-1)
 		}
 		}>最初にもどる</button>
+		}
 		</div>
 		</div>
 		</div>
