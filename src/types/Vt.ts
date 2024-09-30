@@ -30221,33 +30221,6 @@ export const VTS: VT[] = [
   score: 0
 },
 {
-  name: "伏見ガク",
-  iconFile: "fushimigaku.jpg",
-  yt: "https://youtube.com/@fushimigaku?si=FI9nqUxOYF6HWQlG",
-  attrsSet: [
-    [1],
-    [4],
-    [3],
-    [2],
-    [2018],
-    [2],
-    [2,5],
-    [1],
-    [1],
-    [1],
-    [1],
-    [1],
-    [1],
-    [1],
-    [1],
-    [1],
-    [0],
-    [1],
-    [1],
-  ],
-  score: 0
-},
-{
   name: "伏見琥兎(ふしみこと)",
   iconFile: "243coto.jpg",
   yt: "https://youtube.com/@243coto?si=jsFL4a5v45IkqUQF",
