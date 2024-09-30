@@ -37,27 +37,71 @@ function App() {
 		}
 	}
 
-	// すべてのVTに対して選択済みの回答を通してスコア順を得る
-	function show(qs: question[], as: number[]): VT[] {
-		vts.map(
-			(vt) => {
-				vt.score = 0
-				vt = setScore(vt, qs, as)
+	function createScoreBirth() {
+		let now = Math.floor( new Date().getFullYear())
+		return (attrs: number[], input: number): number => {
+			// 現在 - 登録年
+			let rank: number = 0
+			let period: number = now - attrs[0]
+			if (period > 5) {
+				rank = 4
+			} else if (period > 4) {
+				rank = 3
+			} else if (period > 3) {
+				rank = 2
+			} else if (period > 2) {
+				rank = 1
 			}
-		)
-		vts.sort((a, b) => b.score - a.score)
-		return [vts[0], vts[1], vts[2], vts[3]]
+			let diff: number = rank - input
+			return (-400/25) * (diff * diff)
+		}
 	}
-	function setScore(vt: VT, qs: question[], as: number[]): VT {
-		vt.attrsSet.map(
-			(attrs, i) => { // attrs: VTの設定値
-				let q = qs[i] // 問題定義
-				let a = as[i] // 回答内容
-				let s = q.fun(attrs, a)
-				vt.score += s
+
+	// 結果表示
+	function showResults(): VT[] {
+		vts.sort((a, b) => b.score - a.score)
+
+		let fifth: number = 1
+		while(vts[4].score == vts[4+fifth].score && vts.length > fifth+4) {
+			fifth++
+		}
+
+		let d:number = Math.floor(Math.random() * fifth)
+		return [vts[0], vts[1], vts[2], vts[3], vts[4+d]]
+
+	}
+
+	// 設題ごとに全員を採点する
+	function addScoresByQuestion() {
+		vts = vts.map(
+			(vt) => {
+				// 1問目でスコアリセット
+				if (answerCount === 0) {
+					vt.score = 0
+				}
+
+				// スコアリング
+				let calc = questions[answerCount].fun(vt.attrsSet[answerCount], choises[answerCount])
+				vt.score = vt.score + calc
+
+				return vt
 			}
 		)
-		return vt
+	}
+	// 設題ごとに全員を減点する(戻るボタン）
+	function cancelLastScores() {
+		vts = vts.map(
+			(vt) => {
+				// 1問目でスコアリセット
+				if (answerCount === 0) {
+					vt.score = 0
+				}
+				// スコアリング
+				let calc = questions[answerCount-1].fun(vt.attrsSet[answerCount-1], choises[answerCount-1])
+				vt.score = vt.score - calc
+				return vt
+			}
+		)
 	}
 
 	// 質問20題くらい作る
@@ -119,7 +163,7 @@ function App() {
 				"長め",
 				"ベテラン",
 			],
-			fun: createScoreNorm(5),
+			fun: createScoreBirth(),
 		},
 		// 6
 		{
@@ -261,29 +305,37 @@ function App() {
 
 	]
 
-	// 回答保持領域
-	const [choises, setChoise] = useState([
+	const [choises, setChoises] = useState([
 		0,0,0,0,0,
 		0,0,0,0,0,
 		0,0,0,0,0,
-		0,0,0
+		0,0,0,0
 	])
 
 	const [answerCount, setAnswerCount] = useState(-1)
 
 	// 選択肢記憶
-	function handleChoise(q: number, a: number): void {
-		const nextChoises = choises.map((choise, i) => {
-			// 指定された問題の回答をセット
-			if (i === q) {
-				return a
-			} else {
-				// 指定された問題以外は変更しない
-				return choise
-			}
-		})
-		setChoise(nextChoises)
+	function handleChoise(a: number): void {
+		let nextChoises = choises
+		nextChoises[answerCount] = a
+		setChoises(nextChoises)
+
+		// 全VT のスコアを更新
+	 	addScoresByQuestion()
+
 		setAnswerCount(answerCount + 1)
+	}
+
+	function handleBack(): void {
+		// 全VT のスコアを更新
+		cancelLastScores()
+
+		setAnswerCount(answerCount-1)
+
+		let nextChoises = choises
+		nextChoises[answerCount] = 0
+		setChoises(nextChoises)
+
 	}
 
 	return (
@@ -295,10 +347,11 @@ function App() {
 		</a>
 
 		{ answerCount == -1 &&
-		<div>
+			<div>
 		<p>そのぶいはVリスナーの皆さんの好みを選択してもらうことで</p>
 		<p>好みに合うかもしれないVTuberをざっくりオススメするサービスです。</p>
-		<p className="is-size-7">※VTuberデータの追加は御本人様から<a href="https://x.com/@miyanoyami83" target="_blank">宮乃やみ</a>までご連絡ください。</p>
+		<p className="is-size-7">※なるべく希望に合う人を探すけどピッタリの人が出るとは限りません！！</p>
+		<p className="is-size-7">※VTuberデータの追加はご本人様から<a href="https://x.com/@miyanoyami83" target="_blank">宮乃やみ</a>までご連絡ください。</p>
 		</div>
 		}
 
@@ -324,7 +377,7 @@ function App() {
 										return (
 											<div key={"sub-" + j} className="cell m-1">
 											<button className={buttonClass} onClick={() =>{
-												handleChoise(i,j)
+												handleChoise(j)
 											}
 											}>{a}</button>
 											</div>
@@ -341,10 +394,10 @@ function App() {
 
 		<div>
 		{ answerCount === 19 && <h2>おすすめのVTuberは......</h2> }
+		{ answerCount === 19 && <p className="is-size-7">※タップするとチャンネルが開きます</p> }
 		{ answerCount === 19 &&
-			show(questions, choises).map(
+			showResults().map(
 				(vtuber, i) => { 
-					if (answerCount === 19) {
 						return (
 							<a key={i} href={vtuber.yt} target="_blank" className="has-text-black">
 							<div className="card mt-2">
@@ -364,25 +417,24 @@ function App() {
 							</div>
 							</a>
 						) }
-				}
-			)
+		)
 		}
 		</div>
 		<div>
 		{ answerCount > 0 &&
 			<button className="m-2 button is-info is-light" onClick={() => {
-			setAnswerCount(answerCount-1)
+			handleBack()
 		}
 		}>前の質問に戻る</button>
 		}
 
-		{ answerCount > 1 && 
-		<button className="m-2 button is-warning is-light" onClick={() => {
-			setChoise([
+		{ answerCount > 0 && 
+			<button className="m-2 button is-warning is-light" onClick={() => {
+			setChoises([
 				0,0,0,0,0,
 				0,0,0,0,0,
 				0,0,0,0,0,
-				0,0,0
+				0,0,0,0
 			])
 			setAnswerCount(-1)
 		}
