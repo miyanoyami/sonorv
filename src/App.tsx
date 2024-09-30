@@ -68,7 +68,6 @@ function App() {
 
 		let d:number = Math.floor(Math.random() * fifth)
 		return [vts[0], vts[1], vts[2], vts[3], vts[4+d]]
-
 	}
 
 	// 設題ごとに全員を採点する
@@ -342,7 +341,7 @@ function App() {
 		<>
 		<div className="container p-1">
 		<div className="container pl-1 pr-1">
-		<a href="/">
+		<a href="/sonorv/">
 		<LazyLoadImage src={basePath + "logo.svg"} width="320px" alt="logo"/>
 		</a>
 
