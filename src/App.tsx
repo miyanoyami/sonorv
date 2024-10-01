@@ -29,7 +29,11 @@ function App() {
 
 	function createScoreAdd() {
 		return (attrs: number[], input: number): number => {
-			if (attrs[0] === input) {
+			// どちらでもよいときはみんな加点
+			if (input == 2) {
+				return 50
+			}
+			if (attrs[0] === input && input == 0) {
 				return 100
 			} else {
 				return 0
@@ -154,13 +158,13 @@ function App() {
 		},
 		// 5
 		{
-			q: "新人とベテランなら?",
+			q: "いつ頃デビュー?",
 			as: [
-				"ド新人",
-				"新人",
-				"中堅",
-				"長め",
-				"ベテラン",
+				"今年！",
+				"去年",
+				"一昨年",
+				"もっと前",
+				"もっともっと前",
 			],
 			fun: createScoreBirth(),
 		},
@@ -207,7 +211,8 @@ function App() {
 			q:"ケモ耳は好き?",
 			as: [
 				"すき",
-				"そうでもない",
+				"にがて",
+				"どちらでもない",
 			],
 			fun: createScoreAdd(),
 		},
@@ -216,7 +221,8 @@ function App() {
 			q:"オッドアイは好き?",
 			as: [
 				"すき",
-				"そうでもない",
+				"にがて",
+				"どちらでもない",
 			],
 			fun: createScoreAdd(),
 		},
@@ -225,7 +231,8 @@ function App() {
 			q:"眼鏡は好き?",
 			as: [
 				"すき",
-				"そうでもない",
+				"にがて",
+				"どちらでもない",
 			],
 			fun: createScoreAdd(),
 		},
@@ -234,7 +241,8 @@ function App() {
 			q:"和服は好き?",
 			as: [
 				"すき",
-				"そうでもない",
+				"にがて",
+				"どちらでもない",
 			],
 			fun: createScoreAdd(),
 		},
@@ -243,7 +251,8 @@ function App() {
 			q:"ロリ・ショタは好き?",
 			as: [
 				"すき",
-				"そうでもない",
+				"にがて",
+				"どちらでもない",
 			],
 			fun: createScoreAdd(),
 		},
@@ -252,7 +261,8 @@ function App() {
 			q:"人外は好き?",
 			as: [
 				"すき",
-				"そうでもない",
+				"にがて",
+				"どちらでもない",
 			],
 			fun: createScoreAdd(),
 		},
@@ -261,7 +271,8 @@ function App() {
 			q:"メカは好き?",
 			as: [
 				"すき",
-				"そうでもない",
+				"にがて",
+				"どちらでもない",
 			],
 			fun: createScoreAdd(),
 		},
@@ -270,7 +281,8 @@ function App() {
 			q:"方言は好き?",
 			as: [
 				"すき",
-				"そうでもない",
+				"にがて",
+				"どちらでもない",
 			],
 			fun: createScoreAdd(),
 		},
@@ -279,7 +291,8 @@ function App() {
 			q:"下ネタは好き?",
 			as: [
 				"すき",
-				"そうでもない",
+				"にがて",
+				"どちらでもない",
 			],
 			fun: createScoreAdd(),
 		},
@@ -288,7 +301,8 @@ function App() {
 			q:"目隠れは好き?",
 			as: [
 				"すき",
-				"そうでもない",
+				"にがて",
+				"どちらでもない",
 			],
 			fun: createScoreAdd(),
 		},
@@ -297,7 +311,8 @@ function App() {
 			q:"お酒飲む人は好き?",
 			as: [
 				"すき",
-				"そうでもない",
+				"にがて",
+				"どちらでもない",
 			],
 			fun: createScoreAdd(),
 		},
