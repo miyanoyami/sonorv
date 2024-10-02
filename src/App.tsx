@@ -12,6 +12,11 @@ function App() {
 
 	function createScoreMatch() {
 		return (attrs: number[], input: number): number => {
+			// 選択肢10:こだわらない のときは全員最高評価
+			if (input === 10) {
+				return 0
+			}
+
 			if (attrs.includes(input)) {
 				return 0
 			} else {
@@ -22,6 +27,11 @@ function App() {
 
 	function createScoreNorm(choisesCount: number) {
 		return (attrs: number[], input: number): number => {
+			// 末尾の選択肢（こだわらない）のときは全員最高評価
+			if (choisesCount === input) {
+				return 0
+			}
+
 			let diff: number = attrs[0] - input
 			return (-400/(choisesCount * choisesCount)) * (diff * diff)
 		}
@@ -44,6 +54,11 @@ function App() {
 	function createScoreBirth() {
 		let now = Math.floor( new Date().getFullYear())
 		return (attrs: number[], input: number): number => {
+			// 5:どちらでもよいが選ばれたときは全員最高評価
+			if (input === 5) {
+				return 0
+			}
+
 			// 現在 - 登録年
 			let rank: number = 0
 			let period: number = now - attrs[0]
@@ -67,6 +82,10 @@ function App() {
 
 		let fifth: number = 1
 		while(vts[4].score == vts[4+fifth].score && vts.length > fifth+4) {
+			// 全員同値になるときはout of range前に離脱する
+			if (fifth >= vts.length-5) {
+				break
+			}
 			fifth++
 		}
 
@@ -118,6 +137,7 @@ function App() {
 				"中性的",
 				"おしとやか",
 				"かわいい",
+				"こだわらない",
 			],
 			fun: createScoreNorm(5),
 		},
@@ -130,6 +150,7 @@ function App() {
 				"無性別",
 				"中性的な男性",
 				"男性",
+				"こだわらない",
 			],
 			fun: createScoreNorm(5),
 		},
@@ -142,6 +163,7 @@ function App() {
 				"まちまち",
 				"元気",
 				"うるさい",
+				"こだわらない",
 			],
 			fun: createScoreNorm(5),
 		},
@@ -153,6 +175,7 @@ function App() {
 				"のんびり",
 				"にぎやか",
 				"ガヤガヤ",
+				"こだわらない",
 			],
 			fun: createScoreNorm(4)
 		},
@@ -165,6 +188,7 @@ function App() {
 				"一昨年",
 				"もっと前",
 				"もっともっと前",
+				"こだわらない",
 			],
 			fun: createScoreBirth(),
 		},
@@ -177,6 +201,7 @@ function App() {
 				"そこそこ",
 				"大きめ",
 				"大手",
+				"こだわらない",
 			],
 			fun: createScoreNorm(5),
 		},
@@ -194,6 +219,7 @@ function App() {
 				"企画",     // 7
 				"学術",     // 8
 				"その他",   // 9
+				"こだわらない", // 10
 			],
 			fun: createScoreMatch(),
 		},
@@ -203,6 +229,7 @@ function App() {
 			as: [
 				"トーク",
 				"リアクション",
+				"どちらでもない",
 			],
 			fun: createScoreAdd(),
 		},
