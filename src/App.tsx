@@ -39,14 +39,14 @@ function App() {
 
 	function createScoreAdd() {
 		return (attrs: number[], input: number): number => {
-			// どちらでもよいときはみんな加点
+			// どちらでもよいときは変動なし
 			if (input == 2) {
-				return 50
+				return 0
 			}
 			if (attrs[0] === input && input == 0) {
-				return 100
+				return 250
 			} else {
-				return 0
+				return -600
 			}
 		}
 	}
@@ -77,19 +77,29 @@ function App() {
 	}
 
 	// 結果表示
-	function showResults(): VT[] {
+	function showResults(extra: boolean): VT[] {
 		vts.sort((a, b) => b.score - a.score)
 
-		let fifth: number = 1
-		while(vts[4].score == vts[4+fifth].score && vts.length > fifth+4) {
+		// おかわりボタン押されたら0~9を、デフォルトでは0~4を表示する
+		let showidx: number = extra ? 8 : 4
+
+		// 同順位があるときは余分にとって random をかけるのでカウントしておく
+		let duplicated: number = 1
+
+		while(vts[showidx].score == vts[showidx+duplicated].score && vts.length > duplicated+4) {
 			// 全員同値になるときはout of range前に離脱する
-			if (fifth >= vts.length-5) {
+			if (duplicated >= vts.length-1-showidx) {
 				break
 			}
-			fifth++
+			duplicated++
 		}
 
-		let d:number = Math.floor(Math.random() * fifth)
+		let d:number = Math.floor(Math.random() * duplicated)
+
+		// おかわりボタンを押されたら多く返す
+		if (extra) {
+			return [vts[0], vts[1], vts[2], vts[3], vts[4], vts[5], vts[6], vts[7], vts[8+d]]
+		}
 		return [vts[0], vts[1], vts[2], vts[3], vts[4+d]]
 	}
 
@@ -231,7 +241,7 @@ function App() {
 				"リアクション",
 				"どちらでもない",
 			],
-			fun: createScoreAdd(),
+			fun: createScoreNorm(2),
 		},
 		// 9
 		{
@@ -346,6 +356,7 @@ function App() {
 
 	]
 
+	const [more, setMore] = useState(false)
 	const [choises, setChoises] = useState([
 		0,0,0,0,0,
 		0,0,0,0,0,
@@ -391,6 +402,7 @@ function App() {
 			<div>
 		<p>そのぶいはVリスナーの皆さんの好みを選択してもらうことで</p>
 		<p>好みに合うかもしれないVTuberをざっくりオススメするサービスです。</p>
+		<p>現在 { vts.length } 人のVTuberが登録されています。</p>
 		<p className="is-size-7">※なるべく希望に合う人を探すけどピッタリの人が出るとは限りません！！</p>
 		<p className="is-size-7">※VTuberデータの追加はご本人様から<a href="https://x.com/@miyanoyami83" target="_blank">宮乃やみ</a>までご連絡ください。</p>
 		</div>
@@ -437,7 +449,7 @@ function App() {
 		{ answerCount === 19 && <h2>おすすめのVTuberは......</h2> }
 		{ answerCount === 19 && <p className="is-size-7">※タップするとチャンネルが開きます</p> }
 		{ answerCount === 19 &&
-			showResults().map(
+			showResults(false || more).map(
 				(vtuber, i) => { 
 						return (
 							<a key={i} href={vtuber.yt} target="_blank" className="has-text-black">
@@ -462,8 +474,18 @@ function App() {
 		}
 		</div>
 		<div>
+		{ answerCount === 19 && !more &&
+			<button className="m-2 button is-primary is-light" onClick={() => setMore(true)}
+		>おかわりする</button>
+		}
+		</div>
+
+		<div>
+
+
 		{ answerCount > 0 &&
 			<button className="m-2 button is-info is-light" onClick={() => {
+			setMore(false)
 			handleBack()
 		}
 		}>前の質問に戻る</button>
@@ -477,6 +499,7 @@ function App() {
 				0,0,0,0,0,
 				0,0,0,0
 			])
+			setMore(false)
 			setAnswerCount(-1)
 		}
 		}>最初にもどる</button>
