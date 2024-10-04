@@ -44,7 +44,7 @@ function App() {
 				return 0
 			}
 			if (attrs[0] === input && input == 0) {
-				return 250
+				return 400
 			} else {
 				return -600
 			}
