@@ -33,7 +33,7 @@ function App() {
 			}
 
 			let diff: number = attrs[0] - input
-			return (-400/(choisesCount * choisesCount)) * (diff * diff)
+			return (-500/(choisesCount * choisesCount)) * (diff * diff)
 		}
 	}
 
@@ -44,7 +44,7 @@ function App() {
 				return 0
 			}
 			if (attrs[0] === input && input == 0) {
-				return 400
+				return 600
 			} else {
 				return -600
 			}
