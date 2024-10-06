@@ -409,10 +409,16 @@ function App() {
 		}
 
 		{ answerCount == -1 &&
-			<button className="m-2 button is-primary is-light" onClick={() => {
+			<div>
+		<button className="m-2 button is-primary is-light" onClick={() => {
 			setAnswerCount(0)
 		}
 		}>はじめる</button>
+			<button className="m-2 button is-danger is-light" onClick={() => {
+			setAnswerCount(-100)
+		}
+		}>俺は運に任せるぜ！</button>
+		</div>
 		}
 
 		{
