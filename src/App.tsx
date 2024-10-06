@@ -423,7 +423,7 @@ function App() {
 			<button className="m-2 button is-danger is-light" onClick={() => {
 			setAnswerCount(-100)
 		}
-		}>俺は運に任せるぜ！</button>
+		}>運に任せるぜ！</button>
 		</div>
 		}
 
