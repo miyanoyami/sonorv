@@ -4,9 +4,9 @@ import { VT, VTS } from './types/Vt.ts'
 import { question } from './types/question.ts'
 import './App.css'
 import 'bulma/css/bulma.css'
+import VTCard from './components/VTCard.tsx'
 
 function App() {
-	const iconBasePath = process.env.GITHUB_PAGES ? '/sonorv/dist/icon/' : '/sonorv/icon/'
 	const basePath = process.env.GITHUB_PAGES ? '/sonorv/dist/' : '/sonorv/'
 	let vts = VTS
 
@@ -448,30 +448,7 @@ function App() {
 		<div>
 		{ answerCount === 19 && <h2>おすすめのVTuberは......</h2> }
 		{ answerCount === 19 && <p className="is-size-7">※タップするとチャンネルが開きます</p> }
-		{ answerCount === 19 &&
-			showResults(false || more).map(
-				(vtuber, i) => { 
-						return (
-							<a key={i} href={vtuber.yt} target="_blank" className="has-text-black">
-							<div className="card mt-2">
-							<div className="media">
-							<div className="media-left">
-							<figure className="image is-96x96">
-							<LazyLoadImage className="is-rounded" src={iconBasePath + vtuber.iconFile} />
-							</figure>
-							</div>
-
-							<div className="media-content">
-							<p className="has-text-weight-semibold is-size-5 mt-5">
-							{vtuber.name}
-							</p>
-							</div>
-							</div>
-							</div>
-							</a>
-						) }
-		)
-		}
+		{ answerCount === 19 && showResults(false || more).map(vtuber => <VTCard vtuber={vtuber} key={vtuber.yt} />) }
 		</div>
 		<div>
 		{ answerCount === 19 && !more &&
