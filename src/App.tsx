@@ -10,10 +10,16 @@ function App() {
 	const basePath = process.env.GITHUB_PAGES ? '/sonorv/dist/' : '/sonorv/'
 	let vts = VTS
 
-	function createScoreMatch() {
+	function findName(input: string) {
+		setNameFinding(input)
+		const result: VT[] = vts.filter((vt) => vt.name.includes(input))
+		setNameFound(result.length > 0)
+	}
+
+	function createScoreMatch(choisesCount: number) {
 		return (attrs: number[], input: number): number => {
-			// 選択肢10:こだわらない のときは全員最高評価
-			if (input === 10) {
+			// 末尾の選択肢（こだわらない）のときは全員最高評価
+			if (choisesCount === input) {
 				return 0
 			}
 
@@ -119,7 +125,12 @@ function App() {
 				}
 
 				// スコアリング
-				let calc = questions[answerCount].fun(vt.attrsSet[answerCount], choises[answerCount])
+				let filler = [0]
+				if (answerCount === 19) {
+					// 色データは集めていないので現時点では全員をカラフルと判定する
+					filler = [5]
+				}
+				let calc = questions[answerCount].fun(vt.attrsSet[answerCount] || filler, choises[answerCount])
 				vt.score = vt.score + calc
 
 				return vt
@@ -134,8 +145,13 @@ function App() {
 				if (answerCount === 0) {
 					vt.score = 0
 				}
+
 				// スコアリング
-				let calc = questions[answerCount-1].fun(vt.attrsSet[answerCount-1], choises[answerCount-1])
+				let filler = [0]
+				if (answerCount === 19) {
+					filler = [5]
+				}
+				let calc = questions[answerCount-1].fun(vt.attrsSet[answerCount-1] || filler, choises[answerCount-1])
 				vt.score = vt.score - calc
 				return vt
 			}
@@ -237,7 +253,7 @@ function App() {
 				"その他",   // 9
 				"こだわらない", // 10
 			],
-			fun: createScoreMatch(),
+			fun: createScoreMatch(10),
 		},
 		// 8
 		{
@@ -359,6 +375,20 @@ function App() {
 			],
 			fun: createScoreAdd(),
 		},
+		// 20
+		{
+			q: "好きな色は?※未実装",
+			as: [
+				"赤系",
+				"青系",
+				"緑系",
+				"白系",
+				"黒系",
+				"カラフル",
+				"こだわらない",
+			],
+			fun: createScoreMatch(6),
+		}
 
 	]
 
@@ -367,10 +397,12 @@ function App() {
 		0,0,0,0,0,
 		0,0,0,0,0,
 		0,0,0,0,0,
-		0,0,0,0
+		0,0,0,0,0
 	])
 
 	const [answerCount, setAnswerCount] = useState(-1)
+	const [nameFound, setNameFound] = useState(true)
+	const [nameFinding, setNameFinding] = useState("")
 
 	// 選択肢記憶
 	function handleChoise(a: number): void {
@@ -426,6 +458,31 @@ function App() {
 		}>運に任せるぜ！</button>
 		</div>
 		}
+		{
+			answerCount == -1 &&
+				<div className="column is-half is-offset-one-quarter">
+				<input
+					className="input is-small is-info is-rounded"
+					placeholder="登録済みの名前を調べる"
+				   	type="text"
+				   	value={nameFinding}
+				   	onChange={(event) =>{
+					   	findName(event.target.value)}
+					}/>
+				</div>
+		}
+		{
+			answerCount == -1 &&
+				nameFound &&
+				nameFinding !== "" &&
+				<p className="is-size-7">いるかも</p>
+		}
+		{
+			answerCount == -1 &&
+				!nameFound &&
+				<p className="is-size-7">いないかも</p>
+		}
+
 
 		{
 			questions.map(
@@ -458,12 +515,12 @@ function App() {
 		}
 
 		<div>
-		{ answerCount === 19 && <h2>おすすめのVTuberは......</h2> }
-		{ answerCount === 19 && <p className="is-size-7">※タップするとチャンネルが開きます</p> }
-		{ answerCount === 19 && showResults(false || more).map(vtuber => <VTCard vtuber={vtuber} key={vtuber.name} />) }
+		{ answerCount === questions.length && <h2>おすすめのVTuberは......</h2> }
+		{ answerCount === questions.length && <p className="is-size-7">※タップするとチャンネルが開きます</p> }
+		{ answerCount === questions.length && showResults(false || more).map(vtuber => <VTCard vtuber={vtuber} key={vtuber.name} />) }
 		</div>
 		<div>
-		{ answerCount === 19 && !more &&
+		{ answerCount === questions.length && !more &&
 			<button className="m-2 button is-primary is-light" onClick={() => setMore(true)}
 		>おかわりする</button>
 		}
@@ -490,7 +547,7 @@ function App() {
 				0,0,0,0,0,
 				0,0,0,0,0,
 				0,0,0,0,0,
-				0,0,0,0
+				0,0,0,0,0,
 			])
 			setMore(false)
 			setAnswerCount(-1)
