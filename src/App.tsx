@@ -103,6 +103,12 @@ function App() {
 		return [vts[0], vts[1], vts[2], vts[3], vts[4+d]]
 	}
 
+	// ランダムにVTuberを選ぶ
+	function randomPickVT(): VT {
+		let idx = Math.floor(Math.random() * vts.length)
+		return vts[idx]
+	}
+
 	// 設題ごとに全員を採点する
 	function addScoresByQuestion() {
 		vts = vts.map(
@@ -464,8 +470,12 @@ function App() {
 		</div>
 
 		<div>
+		{ answerCount === -100 && <h2>ランダムに選ばれたVTuberは......</h2>}
+		{ answerCount === -100 && <p className="is-size-7">※タップするとチャンネルが開きます</p> }
+		{ answerCount === -100 && <VTCard vtuber={randomPickVT()} /> }
+		</div>
 
-
+		<div>
 		{ answerCount > 0 &&
 			<button className="m-2 button is-info is-light" onClick={() => {
 			setMore(false)
@@ -474,7 +484,7 @@ function App() {
 		}>前の質問に戻る</button>
 		}
 
-		{ answerCount > 0 && 
+		{ (answerCount > 0 || answerCount === -100) &&
 			<button className="m-2 button is-warning is-light" onClick={() => {
 			setChoises([
 				0,0,0,0,0,
