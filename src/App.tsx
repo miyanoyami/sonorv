@@ -460,7 +460,7 @@ function App() {
 		<div>
 		{ answerCount === 19 && <h2>おすすめのVTuberは......</h2> }
 		{ answerCount === 19 && <p className="is-size-7">※タップするとチャンネルが開きます</p> }
-		{ answerCount === 19 && showResults(false || more).map(vtuber => <VTCard vtuber={vtuber} key={vtuber.yt} />) }
+		{ answerCount === 19 && showResults(false || more).map(vtuber => <VTCard vtuber={vtuber} key={vtuber.name} />) }
 		</div>
 		<div>
 		{ answerCount === 19 && !more &&
