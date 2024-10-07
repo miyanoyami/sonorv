@@ -4,9 +4,9 @@ import { VT, VTS } from './types/Vt.ts'
 import { question } from './types/question.ts'
 import './App.css'
 import 'bulma/css/bulma.css'
+import VTCard from './components/VTCard.tsx'
 
 function App() {
-	const iconBasePath = process.env.GITHUB_PAGES ? '/sonorv/dist/icon/' : '/sonorv/icon/'
 	const basePath = process.env.GITHUB_PAGES ? '/sonorv/dist/' : '/sonorv/'
 	let vts = VTS
 
@@ -107,6 +107,12 @@ function App() {
 			return [vts[0], vts[1], vts[2], vts[3], vts[4], vts[5], vts[6], vts[7], vts[8+d]]
 		}
 		return [vts[0], vts[1], vts[2], vts[3], vts[4+d]]
+	}
+
+	// ランダムにVTuberを選ぶ
+	function randomPickVT(): VT {
+		let idx = Math.floor(Math.random() * vts.length)
+		return vts[idx]
 	}
 
 	// 設題ごとに全員を採点する
@@ -441,10 +447,16 @@ function App() {
 		}
 
 		{ answerCount == -1 &&
-			<button className="m-2 button is-primary is-light" onClick={() => {
+			<div>
+		<button className="m-2 button is-primary is-light" onClick={() => {
 			setAnswerCount(0)
 		}
 		}>はじめる</button>
+			<button className="m-2 button is-danger is-light" onClick={() => {
+			setAnswerCount(-100)
+		}
+		}>運に任せるぜ！</button>
+		</div>
 		}
 		{
 			answerCount == -1 &&
@@ -505,30 +517,7 @@ function App() {
 		<div>
 		{ answerCount === questions.length && <h2>おすすめのVTuberは......</h2> }
 		{ answerCount === questions.length && <p className="is-size-7">※タップするとチャンネルが開きます</p> }
-		{ answerCount === questions.length &&
-			showResults(false || more).map(
-				(vtuber, i) => { 
-						return (
-							<a key={i} href={vtuber.yt} target="_blank" className="has-text-black">
-							<div className="card mt-2">
-							<div className="media">
-							<div className="media-left">
-							<figure className="image is-96x96">
-							<LazyLoadImage className="is-rounded" src={iconBasePath + vtuber.iconFile} />
-							</figure>
-							</div>
-
-							<div className="media-content">
-							<p className="has-text-weight-semibold is-size-5 mt-5">
-							{vtuber.name}
-							</p>
-							</div>
-							</div>
-							</div>
-							</a>
-						) }
-		)
-		}
+		{ answerCount === questions.length && showResults(false || more).map(vtuber => <VTCard vtuber={vtuber} key={vtuber.name} />) }
 		</div>
 		<div>
 		{ answerCount === questions.length && !more &&
@@ -538,8 +527,12 @@ function App() {
 		</div>
 
 		<div>
+		{ answerCount === -100 && <h2>ランダムに選ばれたVTuberは......</h2>}
+		{ answerCount === -100 && <p className="is-size-7">※タップするとチャンネルが開きます</p> }
+		{ answerCount === -100 && <VTCard vtuber={randomPickVT()} /> }
+		</div>
 
-
+		<div>
 		{ answerCount > 0 &&
 			<button className="m-2 button is-info is-light" onClick={() => {
 			setMore(false)
@@ -548,7 +541,7 @@ function App() {
 		}>前の質問に戻る</button>
 		}
 
-		{ answerCount > 0 && 
+		{ (answerCount > 0 || answerCount === -100) &&
 			<button className="m-2 button is-warning is-light" onClick={() => {
 			setChoises([
 				0,0,0,0,0,
