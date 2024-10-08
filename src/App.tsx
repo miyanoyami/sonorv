@@ -86,8 +86,8 @@ function App() {
 	function showResults(extra: boolean): VT[] {
 		vts.sort((a, b) => b.score - a.score)
 
-		// おかわりボタン押されたら0~9を、デフォルトでは0~4を表示する
-		let showidx: number = extra ? 8 : 4
+		// おかわりボタン押されたら0~11を、デフォルトでは0~4を表示する
+		let showidx: number = extra ? 10 : 4
 
 		// 同順位があるときは余分にとって random をかけるのでカウントしておく
 		let duplicated: number = 1
@@ -104,7 +104,7 @@ function App() {
 
 		// おかわりボタンを押されたら多く返す
 		if (extra) {
-			return [vts[0], vts[1], vts[2], vts[3], vts[4], vts[5], vts[6], vts[7], vts[8+d]]
+			return [vts[0], vts[1], vts[2], vts[3], vts[4], vts[5], vts[6], vts[7], vts[8], vts[9], vts[10+d]]
 		}
 		return [vts[0], vts[1], vts[2], vts[3], vts[4+d]]
 	}
