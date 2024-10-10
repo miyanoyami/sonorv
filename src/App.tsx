@@ -433,26 +433,26 @@ function App() {
 		<div className="container p-1">
 		<div className="container pl-1 pr-1">
 		<a href="/sonorv/">
-		<LazyLoadImage src={basePath + "logo.svg"} width="320px" alt="logo"/>
+		<LazyLoadImage src={basePath + "logo.png"} width="320px" alt="logo"/>
 		</a>
 
 		{ answerCount == -1 &&
 			<div>
-		<p>そのぶいはVリスナーの皆さんの好みを選択してもらうことで</p>
-		<p>好みに合うかもしれないVTuberをざっくりオススメするサービスです。</p>
-		<p>現在 { vts.length } 人のVTuberが登録されています。</p>
-		<p className="is-size-7">※なるべく希望に合う人を探すけどピッタリの人が出るとは限りません！！</p>
-		<p className="is-size-7">※VTuberデータの追加はご本人様から<a href="https://x.com/@miyanoyami83" target="_blank">宮乃やみ</a>までご連絡ください。</p>
+		<p className="m-plus-rounded-1c-bold">そのぶいはVリスナーの皆さんの好みを選んでもらうことで</p>
+		<p className="m-plus-rounded-1c-bold">好みに合うかもしれない <span className="has-text-info">VTuber</span> をざっくりオススメするサービスです。</p>
+		<p className="m-plus-rounded-1c-bold">現在<span className="has-text-danger"> { vts.length } </span>人の<span className="has-text-info"> VTuber</span> が登録中されています。</p>
+		<p  className="m-plus-rounded-1c-regular is-size-7">※なるべく希望に合う人を探すけどピッタリの人が出るとは限りません！！</p>
+		<p  className="m-plus-rounded-1c-regular is-size-7">※VTuberデータの追加はご本人様から<a href="https://x.com/@miyanoyami83" target="_blank">宮乃やみ</a>までご連絡ください。</p>
 		</div>
 		}
 
 		{ answerCount == -1 &&
 			<div>
-		<button className="m-2 button is-primary is-light" onClick={() => {
+		<button className="m-2 button is-primary is-light m-plus-rounded-1c-bold" onClick={() => {
 			setAnswerCount(0)
 		}
 		}>はじめる</button>
-			<button className="m-2 button is-danger is-light" onClick={() => {
+			<button className="m-2 button is-danger is-light m-plus-rounded-1c-bold" onClick={() => {
 			setAnswerCount(-100)
 		}
 		}>運に任せるぜ！</button>
@@ -475,12 +475,12 @@ function App() {
 			answerCount == -1 &&
 				nameFound &&
 				nameFinding !== "" &&
-				<p className="is-size-7">いるかも</p>
+				<p className="is-size-7 m-plus-rounded-1c-bold">いるかも</p>
 		}
 		{
 			answerCount == -1 &&
 				!nameFound &&
-				<p className="is-size-7">いないかも</p>
+				<p className="is-size-7 m-plus-rounded-1c-bold">いないかも</p>
 		}
 
 
@@ -521,20 +521,20 @@ function App() {
 		</div>
 		<div>
 		{ answerCount === questions.length && !more &&
-			<button className="m-2 button is-primary is-light" onClick={() => setMore(true)}
+			<button className="m-2 button is-primary is-light m-plus-rounded-1c-bold" onClick={() => setMore(true)}
 		>おかわりする</button>
 		}
 		</div>
 
 		<div>
-		{ answerCount === -100 && <h2>ランダムに選ばれたVTuberは......</h2>}
-		{ answerCount === -100 && <p className="is-size-7">※タップするとチャンネルが開きます</p> }
+		{ answerCount === -100 && <h2 className="m-plus-rounded-1c-regular">ランダムに選ばれたVTuberは......</h2>}
+		{ answerCount === -100 && <p className="is-size-7 m-plus-rounded-1c-regular">※タップするとチャンネルが開きます</p> }
 		{ answerCount === -100 && <VTCard vtuber={randomPickVT()} /> }
 		</div>
 
 		<div>
 		{ answerCount > 0 &&
-			<button className="m-2 button is-info is-light" onClick={() => {
+			<button className="m-2 button is-info is-light m-plus-rounded-1c-bold" onClick={() => {
 			setMore(false)
 			handleBack()
 		}
@@ -542,7 +542,7 @@ function App() {
 		}
 
 		{ (answerCount > 0 || answerCount === -100) &&
-			<button className="m-2 button is-warning is-light" onClick={() => {
+			<button className="m-2 button is-warning is-light m-plus-rounded-1c-bold" onClick={() => {
 			setChoises([
 				0,0,0,0,0,
 				0,0,0,0,0,
