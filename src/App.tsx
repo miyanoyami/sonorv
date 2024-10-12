@@ -87,7 +87,7 @@ function App() {
 		vts.sort((a, b) => b.score - a.score)
 
 		// おかわりボタン押されたら0~11を、デフォルトでは0~4を表示する
-		let showidx: number = extra ? 10 : 4
+		let showidx: number = extra ? 12 : 5
 
 		// 同順位があるときは余分にとって random をかけるのでカウントしておく
 		let duplicated: number = 1
@@ -104,9 +104,9 @@ function App() {
 
 		// おかわりボタンを押されたら多く返す
 		if (extra) {
-			return [vts[0], vts[1], vts[2], vts[3], vts[4], vts[5], vts[6], vts[7], vts[8], vts[9], vts[10+d]]
+			return [vts[0], vts[1], vts[2], vts[3], vts[4], vts[5], vts[6], vts[7], vts[8], vts[9], vts[10], vts[11+d]]
 		}
-		return [vts[0], vts[1], vts[2], vts[3], vts[4+d]]
+		return [vts[0], vts[1], vts[2], vts[3], vts[4], vts[5+d]]
 	}
 
 	// ランダムにVTuberを選ぶ
