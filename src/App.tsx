@@ -60,15 +60,17 @@ function App() {
 	function createScoreBirth() {
 		let now = Math.floor( new Date().getFullYear())
 		return (attrs: number[], input: number): number => {
-			// 5:どちらでもよいが選ばれたときは全員最高評価
-			if (input === 5) {
+			// 6:どちらでもよいが選ばれたときは全員最高評価
+			if (input === 6) {
 				return 0
 			}
 
 			// 現在 - 登録年
 			let rank: number = 0
 			let period: number = now - attrs[0]
-			if (period > 5) {
+			if (period > 6) {
+				rank = 5
+			} else if (period > 5) {
 				rank = 4
 			} else if (period > 4) {
 				rank = 3
@@ -82,31 +84,36 @@ function App() {
 		}
 	}
 
-	// 結果表示
-	function showResults(extra: boolean): VT[] {
-		vts.sort((a, b) => b.score - a.score)
-
-		// おかわりボタン押されたら0~11を、デフォルトでは0~4を表示する
-		let showidx: number = extra ? 12 : 5
-
-		// 同順位があるときは余分にとって random をかけるのでカウントしておく
+	function pick(sorted: VT[]): [VT, VT[]] {
 		let duplicated: number = 1
 
-		while(vts[showidx].score == vts[showidx+duplicated].score && vts.length > duplicated+4) {
-			// 全員同値になるときはout of range前に離脱する
-			if (duplicated >= vts.length-1-showidx) {
-				break
-			}
+		while(sorted[0].score == sorted[duplicated].score && sorted.length > duplicated+1) {
 			duplicated++
 		}
 
-		let d:number = Math.floor(Math.random() * duplicated)
+		let d: number = Math.floor(Math.random() * duplicated)
+		let car: VT = sorted.splice(d, 1)
+		return [car[0], sorted]
+	}
 
-		// おかわりボタンを押されたら多く返す
-		if (extra) {
-			return [vts[0], vts[1], vts[2], vts[3], vts[4], vts[5], vts[6], vts[7], vts[8], vts[9], vts[10], vts[11+d]]
+	// 結果表示
+	const showResults = (extra: boolean): VT[] => {
+
+		// おかわりじゃないとき（新たな選択肢で来た場合）は全データを候補にいれる
+		vts.sort((a, b) => b.score - a.score)
+		let remain: VT[] = [...vts]
+		let answer: VT[] = []
+
+		let max = extra ? 12 : 5
+		let i: number = 0
+		while(i < max) {
+			// 12人まで選ぶ
+			let tuple:[VT, VT[]] = pick(remain)
+			remain = [...tuple[1]]
+			answer.push(tuple[0])
+			i++
 		}
-		return [vts[0], vts[1], vts[2], vts[3], vts[4], vts[5+d]]
+		return answer
 	}
 
 	// ランダムにVTuberを選ぶ
@@ -220,6 +227,7 @@ function App() {
 				"一昨年",
 				"もっと前",
 				"もっともっと前",
+				"もっともーっと前",
 				"こだわらない",
 			],
 			fun: createScoreBirth(),
