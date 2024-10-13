@@ -16,6 +16,15 @@ function App() {
 		setNameFound(result.length > 0)
 	}
 
+	function detectPF(url: string): number {
+		if(url.includes("youtube.com")) {
+			return 0
+		} else if (url.includes("twitch.tv")) {
+			return 1
+		}
+		return 2
+	}
+
 	function createScoreMatch(choisesCount: number) {
 		return (attrs: number[], input: number): number => {
 			// 末尾の選択肢（こだわらない）のときは全員最高評価
@@ -27,6 +36,22 @@ function App() {
 				return 0
 			} else {
 				return -1000
+			}
+		}
+	}
+
+	function createScorePF(choisesCount: number) {
+		return (attrs: number[], input: number): number => {
+			// 末尾の選択肢（こだわらない）のときは全員最高評価
+			if (choisesCount === input) {
+				return 0
+			}
+
+			// PF 不一致は大幅減点とする
+			if (attrs.includes(input)) {
+				return 0
+			} else {
+				return -12000
 			}
 		}
 	}
@@ -91,13 +116,13 @@ function App() {
 			duplicated++
 		}
 
-		let d: number = Math.floor(Math.random() * duplicated)
-		let car: VT = sorted.splice(d, 1)
-		return [car[0], sorted]
+			let d: number = Math.floor(Math.random() * duplicated)
+			let car: VT = sorted.splice(d, 1)
+			return [car[0], sorted]
 	}
 
 	// 結果表示
-	const showResults = (extra: boolean): VT[] => {
+	function showResults(extra: boolean): VT[] {
 
 		// おかわりじゃないとき（新たな選択肢で来た場合）は全データを候補にいれる
 		vts.sort((a, b) => b.score - a.score)
@@ -113,7 +138,8 @@ function App() {
 			answer.push(tuple[0])
 			i++
 		}
-		return answer
+			console.log(answer)
+			return answer
 	}
 
 	// ランダムにVTuberを選ぶ
@@ -132,12 +158,17 @@ function App() {
 				}
 
 				// スコアリング
-				let filler = [0]
+				let attrsSet: number[] = [0]
 				if (answerCount === 19) {
 					// 色データは集めていないので現時点では全員をカラフルと判定する
-					filler = [5]
+					attrsSet = vt.attrsSet[answerCount] || [5]
+				} else if (answerCount === 20) {
+					// 21問目: 配信プラットフォームは回答外なのでロジックで導出する
+					attrsSet = [detectPF(vt.yt)]
+				} else {
+					attrsSet = vt.attrsSet[answerCount]
 				}
-				let calc = questions[answerCount].fun(vt.attrsSet[answerCount] || filler, choises[answerCount])
+				let calc = questions[answerCount].fun(attrsSet, choises[answerCount])
 				vt.score = vt.score + calc
 
 				return vt
@@ -154,11 +185,18 @@ function App() {
 				}
 
 				// スコアリング
-				let filler = [0]
-				if (answerCount === 19) {
-					filler = [5]
+				let attrsSet: number[] = [0]
+				if (answerCount === 20) {
+					// 色データは集めていないので現時点では全員をカラフルと判定する
+					attrsSet = vt.attrsSet[answerCount-1] || [5]
+				} else if (answerCount === 21) {
+					// 21問目: 配信プラットフォームは回答外なのでロジックで導出する
+					attrsSet = [detectPF(vt.yt)]
+				} else {
+					attrsSet = vt.attrsSet[answerCount-1]
 				}
-				let calc = questions[answerCount-1].fun(vt.attrsSet[answerCount-1] || filler, choises[answerCount-1])
+
+				let calc = questions[answerCount-1].fun(attrsSet, choises[answerCount-1])
 				vt.score = vt.score - calc
 				return vt
 			}
@@ -385,7 +423,7 @@ function App() {
 		},
 		// 20
 		{
-			q: "好きな色は?※未実装",
+			q: "好きな色は?",
 			as: [
 				"赤系",
 				"青系",
@@ -396,6 +434,17 @@ function App() {
 				"こだわらない",
 			],
 			fun: createScoreMatch(6),
+		},
+		// 21 
+		{
+			q: "よく見る配信サイトは?",
+			as: [
+				"YouTube",
+				"Twitch",
+				"その他",
+				"こだわらない",
+			],
+			fun: createScorePF(3),
 		}
 
 	]
@@ -405,7 +454,8 @@ function App() {
 		0,0,0,0,0,
 		0,0,0,0,0,
 		0,0,0,0,0,
-		0,0,0,0,0
+		0,0,0,0,0,
+		0,
 	])
 
 	const [answerCount, setAnswerCount] = useState(-1)
@@ -419,7 +469,7 @@ function App() {
 		setChoises(nextChoises)
 
 		// 全VT のスコアを更新
-	 	addScoresByQuestion()
+		addScoresByQuestion()
 
 		setAnswerCount(answerCount + 1)
 	}
@@ -460,7 +510,7 @@ function App() {
 			setAnswerCount(0)
 		}
 		}>はじめる</button>
-			<button className="m-2 button is-danger is-light m-plus-rounded-1c-bold" onClick={() => {
+		<button className="m-2 button is-danger is-light m-plus-rounded-1c-bold" onClick={() => {
 			setAnswerCount(-100)
 		}
 		}>運に任せるぜ！</button>
@@ -469,15 +519,15 @@ function App() {
 		{
 			answerCount == -1 &&
 				<div className="column is-half is-offset-one-quarter">
-				<input
-					className="input is-small is-info is-rounded"
-					placeholder="登録済みの名前を調べる"
-				   	type="text"
-				   	value={nameFinding}
-				   	onChange={(event) =>{
-					   	findName(event.target.value)}
-					}/>
-				</div>
+			<input
+			className="input is-small is-info is-rounded"
+			placeholder="登録済みの名前を調べる"
+			type="text"
+			value={nameFinding}
+			onChange={(event) =>{
+				findName(event.target.value)}
+			}/>
+			</div>
 		}
 		{
 			answerCount == -1 &&
@@ -556,6 +606,7 @@ function App() {
 				0,0,0,0,0,
 				0,0,0,0,0,
 				0,0,0,0,0,
+				0,
 			])
 			setMore(false)
 			setAnswerCount(-1)
