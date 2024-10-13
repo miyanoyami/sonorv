@@ -28087,7 +28087,7 @@ export const VTS: VT[] = [
 {
   name: "日向こがね",
   iconFile: "himukaikogane.jpg",
-  yt: "@himukaikogane",
+  yt: "https://youtube.com/@himukaikogane",
   attrsSet: [
     [4],
     [0],
