@@ -117,15 +117,15 @@ function App() {
 		}
 
 			let d: number = Math.floor(Math.random() * duplicated)
-			let car: VT = sorted.splice(d, 1)
+			let car: VT[] = sorted.splice(d, 1)
 			return [car[0], sorted]
 	}
 
 	// 結果表示
 	function showResults(extra: boolean): VT[] {
-
 		// おかわりじゃないとき（新たな選択肢で来た場合）は全データを候補にいれる
 		vts.sort((a, b) => b.score - a.score)
+
 		let remain: VT[] = [...vts]
 		let answer: VT[] = []
 
@@ -138,8 +138,7 @@ function App() {
 			answer.push(tuple[0])
 			i++
 		}
-			console.log(answer)
-			return answer
+		return answer
 	}
 
 	// ランダムにVTuberを選ぶ
