@@ -168,8 +168,10 @@ function App() {
 					attrsSet = vt.attrsSet[answerCount]
 				}
 				let calc = questions[answerCount].fun(attrsSet, choises[answerCount])
+				if (answerCount === important) {
+					calc = calc*80
+				}
 				vt.score = vt.score + calc
-
 				return vt
 			}
 		)
@@ -196,6 +198,11 @@ function App() {
 				}
 
 				let calc = questions[answerCount-1].fun(attrsSet, choises[answerCount-1])
+
+				if (answerCount-1 === important) {
+					calc = calc*80
+				}
+
 				vt.score = vt.score - calc
 				return vt
 			}
@@ -449,6 +456,7 @@ function App() {
 	]
 
 	const [more, setMore] = useState(false)
+	const [important, setImportant] = useState(-1)
 	const [choises, setChoises] = useState([
 		0,0,0,0,0,
 		0,0,0,0,0,
@@ -539,6 +547,14 @@ function App() {
 				!nameFound &&
 				<p className="is-size-7 m-plus-rounded-1c-bold">いないかも</p>
 		}
+		<div>
+		{ answerCount >= 0 && important < 0 &&
+			<button className="m-2 button is-primary is-light m-plus-rounded-1c-regular" onClick={() => {
+			setImportant(answerCount)
+		}
+		}>この質問が一番大事なときに押すボタン</button>
+		}
+		</div>
 
 
 		{
@@ -590,6 +606,7 @@ function App() {
 		</div>
 
 		<div>
+
 		{ answerCount > 0 &&
 			<button className="m-2 button is-info is-light m-plus-rounded-1c-bold" onClick={() => {
 			setMore(false)
@@ -609,6 +626,7 @@ function App() {
 			])
 			setMore(false)
 			setAnswerCount(-1)
+			setImportant(-1)
 		}
 		}>最初にもどる</button>
 		}
