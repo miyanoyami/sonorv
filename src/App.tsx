@@ -5,9 +5,9 @@ import { question } from './types/question.ts'
 import './App.css'
 import 'bulma/css/bulma.css'
 import VTCard from './components/VTCard.tsx'
+import logo from './assets/logo.png'
 
 function App() {
-	const basePath = process.env.GITHUB_PAGES ? '/sonorv/dist/' : '/sonorv/'
 	let vts = VTS
 
 	function findName(input: string) {
@@ -498,7 +498,7 @@ function App() {
 		<div className="container p-1">
 		<div className="container pl-1 pr-1">
 		<a href="/sonorv/">
-		<LazyLoadImage src={basePath + "logo.png"} width="320px" alt="logo"/>
+		<LazyLoadImage src={logo} width="320px" alt="logo"/>
 		</a>
 
 		{ answerCount == -1 &&
