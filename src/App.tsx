@@ -125,7 +125,6 @@ function App() {
 
 	// 結果表示
 	function showResults(extra: boolean): VT[] {
-		return vts
 		// おかわりじゃないとき（新たな選択肢で来た場合）は全データを候補にいれる
 		vts.sort((a, b) => b.score - a.score)
 
