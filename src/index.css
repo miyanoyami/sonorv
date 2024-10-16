@@ -70,6 +70,13 @@ button:focus-visible {
 .bg-note {
     background-image: linear-gradient(rgba(210, 210, 210, 0.4) 1px, transparent 1px), linear-gradient(to right, rgba(210, 210, 210, 0.4) 1px, transparent 1px);
     background-size: 40px 40px;
-    background-color: #fff;
     background-position: -14px 14px;
 }
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #5a5a5a;
+    color: #fff;
+  }
+}
+
