@@ -21,8 +21,10 @@ function App() {
 			return 0
 		} else if (url.includes("twitch.tv")) {
 			return 1
+		} else if (url.includes("iriam.app") || url.includes("reality.app")) {
+			return 2
 		}
-		return 2
+		return 3
 	}
 
 	function createScoreMatch(choisesCount: number) {
@@ -123,6 +125,7 @@ function App() {
 
 	// 結果表示
 	function showResults(extra: boolean): VT[] {
+		return vts
 		// おかわりじゃないとき（新たな選択肢で来た場合）は全データを候補にいれる
 		vts.sort((a, b) => b.score - a.score)
 
@@ -302,10 +305,11 @@ function App() {
 				"ASMR",     // 6
 				"企画",     // 7
 				"学術",     // 8
-				"その他",   // 9
-				"こだわらない", // 10
+				"同時視聴", // 9
+				"その他",   // 10
+				"こだわらない", // 11
 			],
-			fun: createScoreMatch(10),
+			fun: createScoreMatch(11),
 		},
 		// 8
 		{
@@ -447,6 +451,7 @@ function App() {
 			as: [
 				"YouTube",
 				"Twitch",
+				"IRIAM/REALITY",
 				"その他",
 				"こだわらない",
 			],
