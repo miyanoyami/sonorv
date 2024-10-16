@@ -7,7 +7,7 @@ type Props = {
 }
 
 const VTCard: React.FC<Props> = (props: Props) => {
-  const iconBasePath = process.env.GITHUB_PAGES ? '/sonorv/dist/icon/' : '/sonorv/icon/'
+  const iconBasePath = import.meta.env.BASE_URL + '/icon/'
 
   return (
     <a href={props.vtuber.yt} target="_blank" className="has-text-black">
