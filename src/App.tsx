@@ -440,9 +440,11 @@ function App() {
 				"白系",
 				"黒系",
 				"カラフル",
+				"黄色系",
+				"紫系",
 				"こだわらない",
 			],
-			fun: createScoreMatch(6),
+			fun: createScoreMatch(8),
 		},
 		// 21 
 		{
