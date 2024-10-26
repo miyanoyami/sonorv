@@ -125,6 +125,7 @@ function App() {
 
 	// 結果表示
 	function showResults(extra: boolean): VT[] {
+//		return vts.slice().reverse()
 		// おかわりじゃないとき（新たな選択肢で来た場合）は全データを候補にいれる
 		vts.sort((a, b) => b.score - a.score)
 
@@ -511,7 +512,7 @@ function App() {
 			<div>
 		<p className="m-plus-rounded-1c-bold">そのぶいはVリスナーの皆さんの好みを選んでもらうことで</p>
 		<p className="m-plus-rounded-1c-bold">好みに合うかもしれない <span className="has-text-info">VTuber</span> をざっくりオススメするサービスです。</p>
-		<p className="m-plus-rounded-1c-bold">現在<span className="has-text-danger"> { vts.length } </span>人の<span className="has-text-info"> VTuber</span> が登録中されています。</p>
+		<p className="m-plus-rounded-1c-bold">現在<span className="has-text-danger"> { vts.length } </span>人の<span className="has-text-info"> VTuber</span> が登録されています。</p>
 		<p  className="m-plus-rounded-1c-regular is-size-7">※なるべく希望に合う人を探すけどピッタリの人が出るとは限りません！！</p>
 		<p  className="m-plus-rounded-1c-regular is-size-7">※VTuberデータの追加はご本人様から<a href="https://x.com/@miyanoyami83" target="_blank">宮乃やみ</a>までご連絡ください。</p>
 		</div>
