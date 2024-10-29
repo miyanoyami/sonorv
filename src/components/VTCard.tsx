@@ -1,9 +1,9 @@
 import React from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
-import { VT } from '../types/Vt'
+import { Liver } from '../types/Liver.ts'
 
 type Props = {
-  vtuber: VT
+  vtuber: Liver
 }
 
 const VTCard: React.FC<Props> = (props: Props) => {
