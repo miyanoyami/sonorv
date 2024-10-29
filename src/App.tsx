@@ -5,6 +5,7 @@ import './App.css'
 import 'bulma/css/bulma.css'
 import VTCard from './components/VTCard.tsx'
 import logo from './assets/logo.png'
+import { Liver } from './types/Liver.ts'
 import livers from './data/vts.json'
 
 function App() {
