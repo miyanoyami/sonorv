@@ -10,16 +10,6 @@ import logo from './assets/logo.png'
 function App() {
 	let vts = VTS
 
-	// JSONでDLするための秘密の機能
-	function dlData() {
-		  var resultJson = JSON.stringify(vts);
-	      var downLoadLink = document.createElement("a");
-	      downLoadLink.download = "vts.json";
-	      downLoadLink.href = URL.createObjectURL(new Blob([resultJson], {type: "text.plain"}));
-	      downLoadLink.dataset.downloadurl = ["text/plain", downLoadLink.download, downLoadLink.href].join(":");
-	      downLoadLink.click();
-	  }
-
 	function findName(input: string) {
 		setNameFinding(input)
 		const result: VT[] = vts.filter((vt) => vt.name.includes(input))
