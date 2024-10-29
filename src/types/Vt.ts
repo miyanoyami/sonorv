@@ -140838,7 +140838,7 @@ export const VTS: VT[] = [
   score: 0
 },
 {
-  name: "犬丸えのに",
+  name: "犬丸えのき",
   iconFile: "241018200.jpg",
   yt: "https://youtube.com/@inumaru_enoki?si=r-WgTY0eg0fd6uM_",
   attrsSet: [
@@ -159822,7 +159822,7 @@ export const VTS: VT[] = [
   score: 0
 },
 {
-  name: "ユニオン森",
+  name: "りす乃",
   iconFile: "241022045.jpg",
   yt: "https://youtube.com/@ch_unionmori?si=oxF8M68po7fcGabh",
   attrsSet: [
