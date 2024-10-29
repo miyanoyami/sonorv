@@ -1,18 +1,18 @@
 import { useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
-import { VT, VTS } from './types/Vt.ts'
 import { question } from './types/question.ts'
 import './App.css'
 import 'bulma/css/bulma.css'
 import VTCard from './components/VTCard.tsx'
 import logo from './assets/logo.png'
+import livers from './data/vts.json'
 
 function App() {
-	let vts = VTS
+	let vts = livers
 
 	function findName(input: string) {
 		setNameFinding(input)
-		const result: VT[] = vts.filter((vt) => vt.name.includes(input))
+		const result: Liver[] = vts.filter((vt) => vt.name.includes(input))
 		setNameFound(result.length > 0)
 	}
 
@@ -111,7 +111,7 @@ function App() {
 		}
 	}
 
-	function pick(sorted: VT[]): [VT, VT[]] {
+	function pick(sorted: Liver[]): [Liver, Liver[]] {
 		let duplicated: number = 1
 
 		while(sorted[0].score == sorted[duplicated].score && sorted.length > duplicated+1) {
@@ -119,24 +119,24 @@ function App() {
 		}
 
 			let d: number = Math.floor(Math.random() * duplicated)
-			let car: VT[] = sorted.splice(d, 1)
+			let car: Liver[] = sorted.splice(d, 1)
 			return [car[0], sorted]
 	}
 
 	// 結果表示
-	function showResults(extra: boolean): VT[] {
+	function showResults(extra: boolean): Liver[] {
 //		return vts.slice().reverse()
 		// おかわりじゃないとき（新たな選択肢で来た場合）は全データを候補にいれる
 		vts.sort((a, b) => b.score - a.score)
 
-		let remain: VT[] = [...vts]
-		let answer: VT[] = []
+		let remain: Liver[] = [...vts]
+		let answer: Liver[] = []
 
 		let max = extra ? 12 : 5
 		let i: number = 0
 		while(i < max) {
 			// 12人まで選ぶ
-			let tuple:[VT, VT[]] = pick(remain)
+			let tuple:[Liver, Liver[]] = pick(remain)
 			remain = [...tuple[1]]
 			answer.push(tuple[0])
 			i++
@@ -145,7 +145,7 @@ function App() {
 	}
 
 	// ランダムにVTuberを選ぶ
-	function randomPickVT(): VT {
+	function randomPickVT(): Liver {
 		let idx = Math.floor(Math.random() * vts.length)
 		return vts[idx]
 	}
