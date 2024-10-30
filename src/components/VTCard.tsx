@@ -9,6 +9,7 @@ type Props = {
 const VTCard: React.FC<Props> = (props: Props) => {
   const iconBasePath = import.meta.env.BASE_URL + '/icon/'
 
+  // ロングタップで似ている人を探す機能をつけたい
   return (
     <a href={props.vtuber.yt} target="_blank" className="has-text-black">
     <div className="card mt-2">
