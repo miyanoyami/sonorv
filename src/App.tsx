@@ -481,6 +481,8 @@ function App() {
 
 	const [shareLink, setShareLink] = useState('')
 	const [answers, setAnswers] = useState<Liver[]>([])
+	// パーマリンクから直接結果を表示した場合の制御用
+	const [isDirectResult, setIsDirectResult] = useState(false)
 
 	const [more, setMore] = useState(false)
 	const [important, setImportant] = useState(-1)
@@ -525,6 +527,23 @@ function App() {
 
 	}
 
+	// はじめに戻る
+	function reset() {
+		setChoises([
+			0,0,0,0,0,
+			0,0,0,0,0,
+			0,0,0,0,0,
+			0,0,0,0,0,
+			0,
+		])
+		setMore(false)
+		setAnswerCount(-1)
+		setImportant(-1)
+		setIsDirectResult(false)
+		// URLをキレイにする
+		history.replaceState(null, '', '.')
+	}
+
 	// パーマリンクから遷移した場合の処理
 	useEffect(() => {
 		if (location.search) {
@@ -536,18 +555,10 @@ function App() {
 						setAnswers(livers)
 						setMore(false)
 						setAnswerCount(questions.length)
+						setIsDirectResult(true)
 					} else {
 						// リンク不正 -> はじめに戻す
-						setChoises([
-							0,0,0,0,0,
-							0,0,0,0,0,
-							0,0,0,0,0,
-							0,0,0,0,0,
-							0,
-						])
-						setMore(false)
-						setAnswerCount(-1)
-						setImportant(-1)
+						reset()
 					}
 				})
 		}
@@ -672,7 +683,7 @@ function App() {
 
 		<div>
 
-		{ answerCount > 0 &&
+		{ answerCount > 0 && !isDirectResult &&
 			<button className="m-2 button is-info is-light m-plus-rounded-1c-bold" onClick={() => {
 			setMore(false)
 			handleBack()
@@ -682,17 +693,8 @@ function App() {
 
 		{ (answerCount > 0 || answerCount === -100) &&
 			<button className="m-2 button is-warning is-light m-plus-rounded-1c-bold" onClick={() => {
-			setChoises([
-				0,0,0,0,0,
-				0,0,0,0,0,
-				0,0,0,0,0,
-				0,0,0,0,0,
-				0,
-			])
-			setMore(false)
-			setAnswerCount(-1)
-			setImportant(-1)
-		}
+				reset()
+			}
 		}>最初にもどる</button>
 		}
 		</div>
