@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { question } from './types/question.ts'
 import './App.css'
@@ -7,6 +7,7 @@ import VTCard from './components/VTCard.tsx'
 import logo from './assets/logo.png'
 import { Liver } from './types/Liver.ts'
 import livers from './data/vts.json'
+import { createLink, getLiverListFromLink } from './utils/permanentlink.ts'
 
 function App() {
 	let vts = livers
@@ -142,7 +143,14 @@ function App() {
 			answer.push(tuple[0])
 			i++
 		}
+
+		setShareText(answer)
 		return answer
+	}
+
+	// 導き出したおすすめVTurerを取得する
+	function getAnswers(more: boolean) {
+		return more ? answers : answers.slice(0, 5)
 	}
 
 	// ランダムにVTuberを選ぶ
@@ -211,6 +219,14 @@ function App() {
 				return vt
 			}
 		)
+	}
+
+	/** xでシェアする際のテキストを設定 */
+	function setShareText(answer: Liver[]) {
+		const shareText = `そのぶいからあなたへのおすすめは「${answer[0].name}」です！\n${answer[0].yt}\n\n--\nそのぶいはVリスナーの皆さんの好みを選んでもらうことで好みに合うかもしれない VTuber をざっくりオススメするサービスです。\n\n`
+		createLink(answer).then(link => {
+			setShareLink('https://x.com/intent/post?text=' + encodeURIComponent(shareText + link))
+		})
 	}
 
 	// 質問20題くらい作る
@@ -463,6 +479,11 @@ function App() {
 
 	]
 
+	const [shareLink, setShareLink] = useState('')
+	const [answers, setAnswers] = useState<Liver[]>([])
+	// パーマリンクから直接結果を表示した場合の制御用
+	const [isDirectResult, setIsDirectResult] = useState(false)
+
 	const [more, setMore] = useState(false)
 	const [important, setImportant] = useState(-1)
 	const [choises, setChoises] = useState([
@@ -487,6 +508,11 @@ function App() {
 		addScoresByQuestion()
 
 		setAnswerCount(answerCount + 1)
+
+		// 結果を保存しておく
+		if (answerCount + 1 === questions.length) {
+			setAnswers(showResults(true))
+		}
 	}
 
 	function handleBack(): void {
@@ -500,6 +526,43 @@ function App() {
 		setChoises(nextChoises)
 
 	}
+
+	// はじめに戻る
+	function reset() {
+		setChoises([
+			0,0,0,0,0,
+			0,0,0,0,0,
+			0,0,0,0,0,
+			0,0,0,0,0,
+			0,
+		])
+		setMore(false)
+		setAnswerCount(-1)
+		setImportant(-1)
+		setIsDirectResult(false)
+		// URLをキレイにする
+		history.replaceState(null, '', '.')
+	}
+
+	// パーマリンクから遷移した場合の処理
+	useEffect(() => {
+		if (location.search) {
+			// パーマリンクからぶいのリストを復元する
+			getLiverListFromLink()
+				.then((livers) => {
+					if (livers && livers.length > 0) {
+						setShareText(livers)
+						setAnswers(livers)
+						setMore(false)
+						setAnswerCount(questions.length)
+						setIsDirectResult(true)
+					} else {
+						// リンク不正 -> はじめに戻す
+						reset()
+					}
+				})
+		}
+	}, [location.search])
 
 	return (
 		<>
@@ -556,7 +619,7 @@ function App() {
 				<p className="is-size-7 m-plus-rounded-1c-bold">いないかも</p>
 		}
 		<div>
-		{ answerCount >= 0 && important < 0 &&
+		{ answerCount >= 0 && important < 0 && answerCount < questions.length &&
 			<button className="m-2 button is-primary is-light m-plus-rounded-1c-regular" onClick={() => {
 			setImportant(answerCount)
 		}
@@ -597,10 +660,10 @@ function App() {
 		<div>
 		{ answerCount === questions.length && <h2>おすすめのVTuberは......</h2> }
 		{ answerCount === questions.length && <p className="is-size-7">※タップするとチャンネルが開きます</p> }
-		{ answerCount === questions.length && showResults(false || more).map(vtuber => <VTCard vtuber={vtuber} key={vtuber.name} />) }
+		{ answerCount === questions.length && getAnswers(more).map(vtuber => <VTCard vtuber={vtuber} key={vtuber.name} />) }
 		</div>
 		<div>
-		{ answerCount === questions.length && !more &&
+		{ answerCount === questions.length && !more && answers.length > 5 &&
 			<button className="m-2 button is-primary is-light m-plus-rounded-1c-bold" onClick={() => setMore(true)}
 		>おかわりする</button>
 		}
@@ -612,9 +675,15 @@ function App() {
 		{ answerCount === -100 && <VTCard vtuber={randomPickVT()} /> }
 		</div>
 
+		{ answerCount === questions.length &&
+			<div>
+				<a href={shareLink} target='_blank' className="m-2 button is-primary is-light m-plus-rounded-1c-bold">Xでシェア</a>
+			</div>
+		}
+
 		<div>
 
-		{ answerCount > 0 &&
+		{ answerCount > 0 && !isDirectResult &&
 			<button className="m-2 button is-info is-light m-plus-rounded-1c-bold" onClick={() => {
 			setMore(false)
 			handleBack()
@@ -624,17 +693,8 @@ function App() {
 
 		{ (answerCount > 0 || answerCount === -100) &&
 			<button className="m-2 button is-warning is-light m-plus-rounded-1c-bold" onClick={() => {
-			setChoises([
-				0,0,0,0,0,
-				0,0,0,0,0,
-				0,0,0,0,0,
-				0,0,0,0,0,
-				0,
-			])
-			setMore(false)
-			setAnswerCount(-1)
-			setImportant(-1)
-		}
+				reset()
+			}
 		}>最初にもどる</button>
 		}
 		</div>
