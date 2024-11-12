@@ -50,9 +50,15 @@ const v1 = {
         try {
             const original = await decompress(link)
             const idList = JSON.parse(original) as string[]
-            return idList
-                .map(x => livers.find(l => l.yt === x))
-                .filter(x => x)
+            const res: Liver[] = []
+            idList.forEach((id) => {
+                livers.forEach((liver) => {
+                    if(liver.yt === id) {
+                        res.push(liver)
+                    }
+                })
+            })
+            return res
         } catch (e) {
             return null
         }
