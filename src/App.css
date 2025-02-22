@@ -38,6 +38,25 @@
   padding: 2em;
 }
 
+.circle-container {
+  position: relative;
+  width: 500px;
+  height: 500px;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  margin: 50px auto;
+}
+.circle-icon {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #007bff;
+  color: white;
+  text-align: center;
+  line-height: 60px;
+}
+
 .read-the-docs {
   color: #888;
 }
