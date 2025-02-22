@@ -4,6 +4,7 @@ import { question } from './types/question.ts'
 import './App.css'
 import 'bulma/css/bulma.css'
 import VTCard from './components/VTCard.tsx'
+import UserCircle from './components/UserCircle.tsx'
 import logo from './assets/logo.png'
 import { Liver } from './types/Liver.ts'
 import livers from './data/vts.json'
@@ -137,7 +138,6 @@ function App() {
 		let max = extra ? 12 : 5
 		let i: number = 0
 		while(i < max) {
-			// 12人まで選ぶ
 			let tuple:[Liver, Liver[]] = pick(remain)
 			remain = [...tuple[1]]
 			answer.push(tuple[0])
@@ -148,7 +148,16 @@ function App() {
 		return answer
 	}
 
-	// 導き出したおすすめVTurerを取得する
+	function getResultsCircle(): Liver[] {
+//		return vts.slice().reverse()
+		// おかわりじゃないとき（新たな選択肢で来た場合）は全データを候補にいれる
+		vts.sort((a, b) => b.score - a.score)
+
+		return vts.slice(0, 32)
+	}
+
+
+	// 導き出したおすすめVTuberを取得する
 	function getAnswers(more: boolean) {
 		return more ? answers : answers.slice(0, 5)
 	}
@@ -485,6 +494,7 @@ function App() {
 	const [isDirectResult, setIsDirectResult] = useState(false)
 
 	const [more, setMore] = useState(false)
+	const [spread, setSpread] = useState(false)
 	const [important, setImportant] = useState(-1)
 	const [choises, setChoises] = useState([
 		0,0,0,0,0,
@@ -660,12 +670,27 @@ function App() {
 		<div>
 		{ answerCount === questions.length && <h2>おすすめのVTuberは......</h2> }
 		{ answerCount === questions.length && <p className="is-size-7">※タップするとチャンネルが開きます</p> }
-		{ answerCount === questions.length && getAnswers(more).map(vtuber => <VTCard vtuber={vtuber} key={vtuber.name} />) }
+		{ answerCount === questions.length && !spread && getAnswers(more).map(vtuber => <VTCard vtuber={vtuber} key={vtuber.name} />) }
+		{ answerCount === questions.length && spread && <UserCircle users={getResultsCircle()} /> }
 		</div>
 		<div>
-		{ answerCount === questions.length && !more && answers.length > 5 &&
+		{ answerCount === questions.length && !spread && !more && answers.length > 5 &&
 			<button className="m-2 button is-primary is-light m-plus-rounded-1c-bold" onClick={() => setMore(true)}
 		>おかわりする</button>
+		}
+		</div>
+
+		<div>
+		{ answerCount === questions.length && !spread &&
+			<button className="m-2 button is-danger is-light m-plus-rounded-1c-bold" onClick={() => setSpread(true)}
+		>よくばる</button>
+		}
+		</div>
+
+		<div>
+		{ answerCount === questions.length && spread &&
+			<button className="m-2 button is-primary is-light m-plus-rounded-1c-bold" onClick={() => setSpread(false)}
+		>もどる</button>
 		}
 		</div>
 
