@@ -14306,72 +14306,6 @@
         "score": 0
     },
     {
-        "name": "すずきり",
-        "iconFile": "suzukiri.jpg",
-        "yt": "https://www.youtube.com/@suzukiri",
-        "attrsSet": [
-            [
-                1
-            ],
-            [
-                4
-            ],
-            [
-                1
-            ],
-            [
-                0
-            ],
-            [
-                2019
-            ],
-            [
-                1
-            ],
-            [
-                2,
-                7
-            ],
-            [
-                0
-            ],
-            [
-                1
-            ],
-            [
-                1
-            ],
-            [
-                1
-            ],
-            [
-                1
-            ],
-            [
-                1
-            ],
-            [
-                0
-            ],
-            [
-                1
-            ],
-            [
-                1
-            ],
-            [
-                1
-            ],
-            [
-                1
-            ],
-            [
-                1
-            ]
-        ],
-        "score": 0
-    },
-    {
         "name": "すずはる",
         "iconFile": "suzuharu.png",
         "yt": "https://twitch.tv/cakesuzuharu",
@@ -420965,8 +420899,597 @@
     [7]
   ],
   "score": 0
+},
+{
+  "name": "猫咲奏",
+  "iconFile": "nekosaki_kanade.jpg",
+  "yt": "https://web.iriam.app/s/user/I51JvH2Qyh?uuid=e99b0826",
+  "attrsSet": [
+    [2],
+    [4],
+    [2],
+    [1],
+    [2024],
+    [2],
+    [0,3],
+    [1],
+    [0],
+    [0],
+    [1],
+    [1],
+    [1],
+    [0],
+    [1],
+    [0],
+    [0],
+    [1],
+    [0],
+    [0]
+  ],
+  "score": -3000
+},
+{
+  "name": "弱井 にあ",
+  "iconFile": "yowainia.jpg",
+  "yt": "https://web.iriam.app/s/user/12tcbG3S1e?uuid=38cb4dc0",
+  "attrsSet": [
+    [2],
+    [0],
+    [4],
+    [3],
+    [2024],
+    [0],
+    [3],
+    [0],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [0],
+    [1],
+    [1],
+    [0]
+  ],
+  "score": -3000
+},
+{
+  "name": "柊成カルナ",
+  "iconFile": "soraskrqacb.jpeg",
+  "yt": "https://www.tiktok.com/@soraskrqacb?_t=ZS-8vQE4JidWtD&_r=1",
+  "attrsSet": [
+    [4],
+    [0],
+    [3],
+    [1],
+    [2025],
+    [0],
+    [0,2],
+    [0],
+    [1],
+    [1],
+    [1],
+    [0],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [0],
+    [6]
+  ],
+  "score": 0
+},
+{
+  "name": "シャリーゼ",
+  "iconFile": "syari_ze.jpeg",
+  "yt": "https://www.tiktok.com/@syari_ze?_t=ZS-8vQglqtCxBX&_r=1",
+  "attrsSet": [
+    [4],
+    [0],
+    [2],
+    [1],
+    [2025],
+    [0],
+    [2,3],
+    [1],
+    [1],
+    [1],
+    [1],
+    [0],
+    [1],
+    [1],
+    [1],
+    [0],
+    [1],
+    [1],
+    [1],
+    [1]
+  ],
+  "score": 0
+},
+{
+  "name": "花ノ木しずく🌷‪💧‬",
+  "iconFile": "sizuku.hananok.jpeg",
+  "yt": "https://www.tiktok.com/@sizuku.hananoki?_t=ZS-8vPlOE6E2oq&_r=1",
+  "attrsSet": [
+    [4],
+    [0],
+    [2],
+    [1],
+    [2024],
+    [1],
+    [2,3],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [0],
+    [7]
+  ],
+  "score": 0
+},
+{
+  "name": "玄久寿カオル",
+  "iconFile": "kurokuzu.jpg",
+  "yt": "https://17.live/s/u/202887c3-0c72-4655-b8e3-d86bb6800ca5",
+  "attrsSet": [
+    [1],
+    [3],
+    [3],
+    [1],
+    [2025],
+    [0],
+    [0,3],
+    [0],
+    [1],
+    [1],
+    [1],
+    [1],
+    [0],
+    [1],
+    [1],
+    [0],
+    [1],
+    [1],
+    [0],
+    [6]
+  ],
+  "score": 0
+},
+{
+  "name": "カズキ屋",
+  "iconFile": "kazukiya2525.jpg",
+  "yt": "https://twitcasting.tv/kazukiya2525/movie/814190984?r6243",
+  "attrsSet": [
+    [1],
+    [4],
+    [3],
+    [2],
+    [2021],
+    [1],
+    [0,3],
+    [0],
+    [1],
+    [1],
+    [0],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [0],
+    [1],
+    [1],
+    [0]
+  ],
+  "score": 0
+},
+{
+  "name": "虚無那 夜瑠",
+  "iconFile": "kyomunayoru.jpg",
+  "yt": "https://web.iriam.app/s/user/7SapY8BOAw?uuid=a06074cb",
+  "attrsSet": [
+    [1],
+    [3],
+    [2],
+    [1],
+    [2025],
+    [0],
+    [3,7],
+    [0],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [0],
+    [1],
+    [1],
+    [0],
+    [4]
+  ],
+  "score": -3000
+},
+{
+  "name": "目眩（めくる）めく",
+  "iconFile": "3a91f1b4.png",
+  "yt": "https://reality.app/profile/3a91f1b4?adj_t=8ogcewh_z9yhix5",
+  "attrsSet": [
+    [3],
+    [0],
+    [3],
+    [1],
+    [2024],
+    [0],
+    [3,7],
+    [0],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [0],
+    [1],
+    [1],
+    [0],
+    [1]
+  ],
+  "score": -3000
+},
+{
+  "name": "寝コ兎らび",
+  "iconFile": "NekoRabi_chan.jpg",
+  "yt": "https://web.iriam.app/s/user/271qwukZhu?uuid=69cd2f8d",
+  "attrsSet": [
+    [4],
+    [0],
+    [3],
+    [2],
+    [2024],
+    [2],
+    [0,3],
+    [0],
+    [0],
+    [1],
+    [1],
+    [1],
+    [1],
+    [0],
+    [1],
+    [1],
+    [1],
+    [1],
+    [0],
+    [1]
+  ],
+  "score": -3000
+},
+{
+  "name": "熊月モカ",
+  "iconFile": "kumazuki_mocha.jpg",
+  "yt": "https://web.iriam.app/s/user/9DnJy0ORDo?uuid=ad597983",
+  "attrsSet": [
+    [1],
+    [3],
+    [2],
+    [2],
+    [2025],
+    [0],
+    [0,3],
+    [0],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [0],
+    [1],
+    [0],
+    [6]
+  ],
+  "score": -3000
+},
+{
+  "name": "仮睡もこ",
+  "iconFile": "UtataneMoko.jpg",
+  "yt": "https://web.iriam.app/s/user/L8ku98SYBa?uuid=3d993228",
+  "attrsSet": [
+    [4],
+    [0],
+    [2],
+    [0],
+    [2024],
+    [1],
+    [1,3],
+    [1],
+    [0],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [0],
+    [1],
+    [1],
+    [0],
+    [1]
+  ],
+  "score": -3000
+},
+{
+  "name": "九十九",
+  "iconFile": "8tukumo9.jpg",
+  "yt": "https://web.iriam.app/s/user/YD4bVjBlfc?uuid=b1e0233e",
+  "attrsSet": [
+    [0],
+    [4],
+    [2],
+    [1],
+    [2025],
+    [0],
+    [0,3],
+    [0],
+    [1],
+    [1],
+    [1],
+    [0],
+    [1],
+    [0],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [0]
+  ],
+  "score": -3000
+},
+{
+  "name": "月花しるし",
+  "iconFile": "tsuki87_shirusi.jpg",
+  "yt": "https://twitcasting.tv/tsuki87_shirusi",
+  "attrsSet": [
+    [4],
+    [0],
+    [1],
+    [0],
+    [2025],
+    [0],
+    [3,1],
+    [0],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [0],
+    [1],
+    [1],
+    [1]
+  ],
+  "score": 0
+},
+{
+  "name": "すずめ",
+  "iconFile": "hosinokosuzume.jpg",
+  "yt": "https://web.iriam.app/s/user/xCZaG19vuN?uuid=4fb66fe6",
+  "attrsSet": [
+    [4],
+    [0],
+    [2],
+    [1],
+    [2024],
+    [1],
+    [3,7],
+    [0],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [0],
+    [1],
+    [0],
+    [1],
+    [1],
+    [0],
+    [3]
+  ],
+  "score": -3000
+},
+{
+  "name": "神凪祐那/百合咲将",
+  "iconFile": "yuna_VLiver.jpg",
+  "yt": "https://reality.app/profile/8b374bd6?adj_t=8ogcewh_z9yhix5",
+  "attrsSet": [
+    [2],
+    [2],
+    [2],
+    [1],
+    [2025],
+    [0],
+    [3,7],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [0],
+    [1],
+    [1],
+    [1],
+    [0],
+    [1],
+    [0],
+    [5]
+  ],
+  "score": -3000
+},
+{
+  "name": "凪 海叶",
+  "iconFile": "nagi_kaito.jpeg",
+  "yt": "https://www.tiktok.com/@nagi_kaito?_t=ZS-8vIn4faTzov&_r=1",
+  "attrsSet": [
+    [2],
+    [2],
+    [2],
+    [1],
+    [2024],
+    [0],
+    [2,3],
+    [0],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [0],
+    [1],
+    [1],
+    [0],
+    [1]
+  ],
+  "score": 0
+},
+{
+  "name": "狐陽華廻（こよう　かえ）",
+  "iconFile": "cae5_.jpeg",
+  "yt": "https://www.tiktok.com/@cae5_?_t=ZS-8vPUEtZh3ZK&_r=1",
+  "attrsSet": [
+    [3],
+    [1],
+    [2],
+    [1],
+    [2024],
+    [0],
+    [2],
+    [1],
+    [1],
+    [1],
+    [1],
+    [0],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [0],
+    [0]
+  ],
+  "score": 0
+},
+{
+  "name": "夜想 律",
+  "iconFile": "Ritsu_Yasou.jpg",
+  "yt": "https://web.iriam.app/s/user/Xj5KJZjmh1?uuid=6ca59b50",
+  "attrsSet": [
+    [2],
+    [0],
+    [1],
+    [0],
+    [2024],
+    [1],
+    [0,3],
+    [0],
+    [1],
+    [0],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [0],
+    [1],
+    [1],
+    [0],
+    [1]
+  ],
+  "score": -3000
+},
+{
+  "name": "さとうしろ",
+  "iconFile": "shiro_230824.jpg",
+  "yt": "https://web.iriam.app/s/user/HuPmGsHEqt?uuid=01b0665f",
+  "attrsSet": [
+    [3],
+    [0],
+    [2],
+    [2],
+    [2023],
+    [0],
+    [0,3],
+    [0],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [0],
+    [1],
+    [1],
+    [0],
+    [2]
+  ],
+  "score": -3000
+},
+{
+  "name": "ツキ☪️🈷️",
+  "iconFile": "2656d467.png",
+  "yt": "https://reality.app/profile/2656d467?adj_t=8ogcewh_z9yhix5",
+  "attrsSet": [
+    [4],
+    [0],
+    [3],
+    [1],
+    [2024],
+    [2],
+    [0,3],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [0],
+    [0],
+    [1],
+    [1],
+    [1],
+    [1],
+    [0],
+    [7]
+  ],
+  "score": -3000
 }
 ]
+
 
 
 
