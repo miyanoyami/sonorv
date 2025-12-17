@@ -39,7 +39,7 @@ const UserCircle: React.FC<UserCircleProps> = ({ users }) => {
     centerLink.target = '_blank';
     const centerIcon = document.createElement('img');
     centerIcon.classList.add('circle-icon');
-    centerIcon.src = import.meta.env.BASE_URL + '/icon/' + centerUser.iconFile;
+    centerIcon.src = 'https://sonov.vtube.work/' + centerUser.iconFile;
     const centerIconSize = Math.floor(110 * sizeRatio);
     centerIcon.style.width = `${centerIconSize}px`;
     centerIcon.style.height = `${centerIconSize}px`;
@@ -62,7 +62,7 @@ const UserCircle: React.FC<UserCircleProps> = ({ users }) => {
 
         const icon = document.createElement('img');
         icon.classList.add('circle-icon');
-        icon.src = import.meta.env.BASE_URL + '/icon/' + user.iconFile;
+        icon.src = 'https://sonov.vtube.work/' + user.iconFile;
 
         const scoreRatio = (user.score - minScore) / (maxScore - minScore);
         const iconSize = Math.floor((90 + scoreRatio * 10) * sizeRatio);
