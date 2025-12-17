@@ -7,7 +7,7 @@ type Props = {
 }
 
 const VTCard: React.FC<Props> = (props: Props) => {
-  const iconBasePath = import.meta.env.BASE_URL + '/icon/'
+  const iconBasePath = "https://sonov.vtube.work/"
 
   // ロングタップで似ている人を探す機能をつけたい
   return (
